@@ -16,7 +16,7 @@ class CreateAnggotaTable extends Migration
         Schema::create('anggota', function (Blueprint $table) {
             $table->id();
             $table->char('no_ktp', 16)->unique();
-            $table->string('nama_kursus', 100);
+            $table->string('nama_anggota', 100);
             $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
             $table->text('alamat');
             $table->char('kota', 20);
