@@ -14,7 +14,7 @@ class AnggotaController extends Controller
      */
     public function index()
     {
-        //
+        return view('member.anggota_create');
     }
 
     /**
