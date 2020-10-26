@@ -19,7 +19,7 @@ class CreateSimpananTable extends Migration
             $table->foreignId('anggota_id');
             $table->foreign('anggota_id')->references('id')->on('anggota')->onDelete('cascade');
 
-            $table->set('jenis_simpanan', ['pokok', 'sukarela', 'wajib', 'lain']);
+            $table->enum('jenis_simpanan', ['pokok', 'sukarela', 'wajib', 'lain']);
             $table->integer('nominal');
             $table->text('keterangan')->nullable();
 
