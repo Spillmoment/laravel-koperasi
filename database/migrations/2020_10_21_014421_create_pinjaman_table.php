@@ -24,7 +24,7 @@ class CreatePinjamanTable extends Migration
             $table->char('bagi_hasil', 3);
             $table->integer('bayar_perbulan');
             $table->text('keterangan')->nullable();
-            $table->set('status', ['pending', 'belum_lunas', 'lunas']);
+            $table->enum('status', ['pending', 'belum_lunas', 'lunas']);
 
             $table->timestamps();
             $table->softDeletes();
