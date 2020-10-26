@@ -14,7 +14,17 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    <p>
+                        Hi <strong> {{ auth()->user()->name }} </strong>
+                        Anda Login Sebagai
+                        @can('isKetua')
+                        <span class="btn btn-success">Ketua</span>
+                        @elsecan('isAdmin')
+                        <span class="btn btn-info">Admin</span>
+                        @endcan
+                    </p>
+
+                   
                 </div>
             </div>
         </div>
