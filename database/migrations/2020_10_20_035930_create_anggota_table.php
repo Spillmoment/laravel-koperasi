@@ -21,7 +21,7 @@ class CreateAnggotaTable extends Migration
             $table->text('alamat');
             $table->char('kota', 20);
             $table->char('telepon', 12);
-            $table->boolean('pengurus');
+            $table->enum('pengurus', ['pengurus', 'bukan_pengurus']);
             $table->timestamps();
             $table->softDeletes();
         });
