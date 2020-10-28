@@ -21,3 +21,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/tambah_anggota', 'AnggotaController@index')->name('create-anggota');
+
+Route::resource('anggota', 'AnggotaController');

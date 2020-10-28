@@ -39,13 +39,13 @@
       <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-toggle="collapse" data-target="#submenu-app">
           <span>
           <span class="sidebar-icon"><span class="fas fa-table"></span></span> 
-          Tables
+          Anggota
           </span>
           <span class="link-arrow"><span class="fas fa-chevron-right"></span></span> 
       </span>
       <div class="multi-level collapse " role="list" id="submenu-app" aria-expanded="false">
           <ul class="flex-column nav">
-              <li class="nav-item "><a class="nav-link" href="../../pages/tables/bootstrap-tables.html"><span>Bootstrap Tables</span></a></li>
+              <li class="nav-item "><a class="nav-link" href="{{ route('anggota.create') }}"><span>Tambah Anggota</span></a></li>
           </ul>
       </div>
       </li>
