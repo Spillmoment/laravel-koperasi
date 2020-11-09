@@ -14,13 +14,17 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', 'Auth\LoginController@index');
 Auth::routes(['register' => false]);
 
 Route::middleware('auth')
     ->group(function () {
         Route::get('/home', 'HomeController@index')->name('home');
+    });
+
+Route::middleware('ketua')
+    ->group(function () {
+        Route::get('/private', function () {
+            return 'Halaman Ketua';
+        });
     });
