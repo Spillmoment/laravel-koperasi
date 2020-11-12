@@ -14,7 +14,8 @@ class AnggotaController extends Controller
      */
     public function index()
     {
-        
+        $data_anggota = Anggota::all();
+        return view('member.anggota_index', compact('data_anggota'));   
     }
 
     /**
@@ -35,8 +36,21 @@ class AnggotaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'no_ktp' => 'required|unique:anggota|digits:16',
+            'nama_anggota' => 'required|string|max:100',
+            'jenis_kelamin' => 'required|in:laki-laki,perempuan',
+            'alamat' => 'required|max:200',
+            'kota' => 'required|max:20',
+            'telepon' => 'required|max:12',
+            'pengurus' => 'required|in:pengurus,bukan_pengurus'
+        ]);
 
-        return $request->all();
+        $data = $request->all();
+
+        Anggota::create($data);
+
+        return redirect()->route('anggota.create')->with(['status' => 'Data Anggota Berhasil Ditambahkan']);
     }
 
     /**
@@ -56,9 +70,10 @@ class AnggotaController extends Controller
      * @param  \App\Anggota  $anggota
      * @return \Illuminate\Http\Response
      */
-    public function edit(Anggota $anggota)
+    public function edit($anggotum)
     {
-        //
+        $anggota = Anggota::Find($anggotum);
+        return view('member.anggota_show', compact('anggota'));
     }
 
     /**
@@ -68,9 +83,24 @@ class AnggotaController extends Controller
      * @param  \App\Anggota  $anggota
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Anggota $anggota)
+    public function update(Request $request, $anggotum)
     {
-        //
+        $request->validate([
+            'no_ktp' => 'required|digits:16|unique:anggota,no_ktp,'.$anggotum,
+            'nama_anggota' => 'required',
+            'jenis_kelamin' => 'required',
+            'alamat' => 'required',
+            'kota' => 'required',
+            'telepon' => 'required',
+            'pengurus' => 'required'
+        ]);
+
+        $anggota = Anggota::findOrFail($anggotum);
+        $data = $request->all();
+
+        $anggota->update($data);
+
+        return redirect()->route('anggota.index')->with(['status' => 'Data Berhasil Diubah']);
     }
 
     /**
@@ -79,8 +109,11 @@ class AnggotaController extends Controller
      * @param  \App\Anggota  $anggota
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Anggota $anggota)
+    public function destroy($anggotum)
     {
-        //
+        $anggota = Anggota::findOrFail($anggotum);
+        $anggota->forceDelete();
+        return redirect()->route('anggota.index')
+            ->with(['status' => 'Data unit Berhasil Dihapus']);
     }
 }
