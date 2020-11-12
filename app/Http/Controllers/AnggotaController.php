@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Anggota;
+use App\Simpanan;
 use Illuminate\Http\Request;
 
 class AnggotaController extends Controller
@@ -37,7 +38,7 @@ class AnggotaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'no_ktp' => 'required|unique:anggota|digits:16',
+            'no_ktp' => 'required|unique:anggota|digits:3',
             'nama_anggota' => 'required|string|max:100',
             'jenis_kelamin' => 'required|in:laki-laki,perempuan',
             'alamat' => 'required|max:200',
@@ -46,9 +47,22 @@ class AnggotaController extends Controller
             'pengurus' => 'required|in:pengurus,bukan_pengurus'
         ]);
 
-        $data = $request->all();
+        $anggota = new Anggota;
+        $anggota->no_ktp = $request->no_ktp;
+        $anggota->nama_anggota = $request->nama_anggota;
+        $anggota->jenis_kelamin = $request->jenis_kelamin;
+        $anggota->alamat = $request->alamat;
+        $anggota->kota = $request->kota;
+        $anggota->telepon = $request->telepon;
+        $anggota->pengurus = $request->pengurus;
+        $anggota->save();
 
-        Anggota::create($data);
+        $simpanan = new Simpanan;
+        $simpanan->jenis_simpanan = 'wajib';
+        $simpanan->nominal = 10000;
+        $simpanan->keterangan = 'Simpanan waktu pendaftaran';
+
+        $anggota->simpanan()->save($simpanan);
 
         return redirect()->route('anggota.create')->with(['status' => 'Data Anggota Berhasil Ditambahkan']);
     }
