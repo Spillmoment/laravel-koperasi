@@ -16,14 +16,14 @@
 
                             <div class="mb-3">
                                 <label for="ktp">No. KTP</label>
-                                <input type="text" class="form-control {{ $errors->first('no_ktp') ? 'is-invalid' : '' }}" id="no_ktp" name="no_ktp">
+                            <input type="text" class="form-control {{ $errors->first('no_ktp') ? 'is-invalid' : '' }}" id="no_ktp" name="no_ktp" value="{{ old('no_ktp') }}">
                                 <div class="invalid-feedback">
                                     {{$errors->first('no_ktp')}}
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="nama_anggota">Nama Anggota</label>
-                                <input type="text" class="form-control {{ $errors->first('nama_anggota') ? 'is-invalid' : '' }}" id="nama_anggota" name="nama_anggota">
+                                <input type="text" class="form-control {{ $errors->first('nama_anggota') ? 'is-invalid' : '' }}" id="nama_anggota" name="nama_anggota" value="{{ old('nama_anggota') }}">
                                 <div class="invalid-feedback">
                                     {{$errors->first('nama_anggota')}}
                                 </div>
@@ -50,7 +50,7 @@
                             </div>
                             <div class="my-4">
                                 <label for="textarea">Alamat</label>
-                                <textarea class="form-control {{ $errors->first('alamat') ? 'is-invalid' : '' }}" placeholder="Tulis alamat lengkap..." id="alamat" name="alamat" rows="4"></textarea>
+                                <textarea class="form-control {{ $errors->first('alamat') ? 'is-invalid' : '' }}" placeholder="Tulis alamat lengkap..." id="alamat" name="alamat" rows="4">{{ old('alamat') }}</textarea>
                                 <div class="invalid-feedback">
                                     {{$errors->first('alamat')}}
                                 </div>
@@ -59,7 +59,7 @@
                                 <label for="kota">Kota</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><span class="fas fa-building"></span></span>
-                                    <input type="text" class="form-control {{ $errors->first('kota') ? 'is-invalid' : '' }}" id="kota" name="kota">
+                                    <input type="text" class="form-control {{ $errors->first('kota') ? 'is-invalid' : '' }}" id="kota" name="kota" value="{{ old('kota') }}">
                                     <div class="invalid-feedback">
                                         {{$errors->first('kota')}}
                                     </div>
@@ -69,7 +69,7 @@
                                 <label for="telepon">Telepon</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><span class="fas fa-phone"></span></span>
-                                    <input type="text" class="form-control {{ $errors->first('telepon') ? 'is-invalid' : '' }}" id="telepon" name="telepon">
+                                    <input type="text" class="form-control {{ $errors->first('telepon') ? 'is-invalid' : '' }}" id="telepon" name="telepon" value="{{ old('telepon') }}">
                                     <div class="invalid-feedback">
                                         {{$errors->first('telepon')}}
                                     </div>
@@ -96,8 +96,8 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="simpanan_wajib">Simpanan Wajib</label>
-                                <input type="text" class="form-control" id="simpanan_wajib" name="simpanan_wajib" disabled value="1xxx000">
+                                <label for="nominal">Simpanan Wajib</label>
+                                <input type="text" class="form-control" id="nominal" name="nominal" disabled value="10000">
                                 <small class="form-text text-muted">Sebagai syarat tanda keanggotan</small>
                             </div>
                             <div class="mb-3">
