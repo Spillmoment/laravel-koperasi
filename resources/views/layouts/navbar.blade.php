@@ -43,9 +43,12 @@
           </span>
           <span class="link-arrow"><span class="fas fa-chevron-right"></span></span> 
       </span>
-      <div class="multi-level collapse " role="list" id="submenu-app" aria-expanded="false">
+      <div class="multi-level collapse {{ (Request::route()->getName() == 'anggota.index') ||
+                                          (Request::route()->getName() == 'anggota.create') || 
+                                          (Request::route()->getName() == 'anggota.show')  ? 'show' : '' }}" role="list" id="submenu-app" aria-expanded="false">
           <ul class="flex-column nav">
-              <li class="nav-item "><a class="nav-link" href="{{ route('anggota.create') }}"><span>Tambah Anggota</span></a></li>
+              <li class="nav-item {{ (Request::route()->getName() == 'anggota.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('anggota.index') }}"><span>Data Anggota</span></a></li>
+              <li class="nav-item {{ (Request::route()->getName() == 'anggota.create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('anggota.create') }}"><span>Tambah Anggota</span></a></li>
           </ul>
       </div>
       </li>
@@ -77,7 +80,7 @@
           </span>
           <span class="link-arrow"><span class="fas fa-chevron-right"></span></span> 
       </span>
-      <div class="multi-level collapse  show " role="list" id="submenu-components" aria-expanded="false">
+      <div class="multi-level collapse" role="list" id="submenu-components" aria-expanded="false">
           <ul class="flex-column nav">
               <li class="nav-item "><a class="nav-link" href="../../pages/components/buttons.html"><span>Buttons</span></a></li>
               <li class="nav-item "><a class="nav-link" href="../../pages/components/notifications.html"><span>Notifications</span></a></li>
