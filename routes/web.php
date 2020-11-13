@@ -8,18 +8,14 @@ Auth::routes(['register' => false]);
 Route::prefix('admin')
     ->middleware('auth')
     ->group(function () {
-        Route::get('/', 'HomeController@index')->name('home');
-        Route::resource('anggota', 'AnggotaController');
-
+        Route::get('/', 'Admin\DashboardController@index')->name('admin');
+        Route::resource('anggota', 'Admin\AnggotaController');
     });
 
 Route::prefix('ketua')
     ->middleware('ketua')
     ->group(function () {
-        Route::get('/private', function () {
-            return 'Halaman Ketua';
-        });
+        Route::get('/', 'Ketua\DashboardController@index')->name('ketua');
     });
 
-
-
+Route::get('/home', 'HomeController@index');
