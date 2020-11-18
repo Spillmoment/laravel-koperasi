@@ -10,6 +10,7 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('/', 'HomeController@index')->name('home');
         Route::resource('anggota', 'AnggotaController');
+        Route::resource('simpanan', 'SimpananController');
 
     });
 
