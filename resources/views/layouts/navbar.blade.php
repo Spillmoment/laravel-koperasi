@@ -17,108 +17,45 @@
       </div>
   </div>
   <ul class="nav flex-column">
-      <li class="nav-item ">
-      <a href="../../pages/dashboard/dashboard.html" class="nav-link">
-          <span class="sidebar-icon"><span class="fas fa-chart-pie"></span></span>
-          <span>Overview</span>
-      </a>
-      </li>
-      <li class="nav-item ">
-      <a href="../../pages/transactions.html" class="nav-link">
-          <span class="sidebar-icon"><span class="fas fa-hand-holding-usd"></span></span>
-          <span>Transactions</span>
-      </a>
-      </li>
-      <li class="nav-item ">
-      <a href="../../pages/settings.html" class="nav-link">
-          <span class="sidebar-icon"><span class="fas fa-cog"></span></span>
-          <span>Settings</span>
-      </a>
-      </li>
-      <li class="nav-item">
-      <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-toggle="collapse" data-target="#submenu-app">
-          <span>
-          <span class="sidebar-icon"><span class="fas fa-table"></span></span> 
-          Anggota
-          </span>
-          <span class="link-arrow"><span class="fas fa-chevron-right"></span></span> 
-      </span>
-      <div class="multi-level collapse {{ (Request::route()->getName() == 'anggota.index') ||
-                                          (Request::route()->getName() == 'anggota.create') || 
-                                          (Request::route()->getName() == 'anggota.show')  ? 'show' : '' }}" role="list" id="submenu-app" aria-expanded="false">
-          <ul class="flex-column nav">
-              <li class="nav-item {{ (Request::route()->getName() == 'anggota.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('anggota.index') }}"><span>Data Anggota</span></a></li>
-              <li class="nav-item {{ (Request::route()->getName() == 'anggota.create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('anggota.create') }}"><span>Tambah Anggota</span></a></li>
-          </ul>
-      </div>
-      </li>
-      <li class="nav-item">
-      <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-toggle="collapse" data-target="#submenu-pages">
-          <span>
-          <span class="sidebar-icon"><span class="far fa-file-alt"></span></span> 
-          Page examples
-          </span>
-          <span class="link-arrow"><span class="fas fa-chevron-right"></span></span> 
-      </span>
-      <div class="multi-level collapse " role="list" id="submenu-pages" aria-expanded="false">
-          <ul class="flex-column nav">
-              <li class="nav-item"><a class="nav-link" href="../../pages/examples/sign-in.html"><span>Sign In</span></a></li>
-              <li class="nav-item"><a class="nav-link" href="../../pages/examples/sign-up.html"><span>Sign Up</span></a></li>
-              <li class="nav-item"><a class="nav-link" href="../../pages/examples/forgot-password.html"><span>Forgot password</span></a></li>
-              <li class="nav-item"><a class="nav-link" href="../../pages/examples/reset-password.html"><span>Reset password</span></a></li>
-              <li class="nav-item"><a class="nav-link" href="../../pages/examples/lock.html"><span>Lock</span></a></li>
-              <li class="nav-item"><a class="nav-link" href="../../pages/examples/404.html"><span>404 Not Found</span></a></li>
-              <li class="nav-item"><a class="nav-link" href="../../pages/examples/500.html"><span>500 Server Error</span></a></li>
-          </ul>
-      </div>
-      </li>
-      <li class="nav-item">
-      <span class="nav-link  d-flex justify-content-between align-items-center" data-toggle="collapse" data-target="#submenu-components">
-          <span>
-          <span class="sidebar-icon"><span class="fas fa-box-open"></span></span> 
-          Components
-          </span>
-          <span class="link-arrow"><span class="fas fa-chevron-right"></span></span> 
-      </span>
-      <div class="multi-level collapse" role="list" id="submenu-components" aria-expanded="false">
-          <ul class="flex-column nav">
-              <li class="nav-item "><a class="nav-link" href="../../pages/components/buttons.html"><span>Buttons</span></a></li>
-              <li class="nav-item "><a class="nav-link" href="../../pages/components/notifications.html"><span>Notifications</span></a></li>
-              <li class="nav-item  active "><a class="nav-link" href="../../pages/components/forms.html"><span>Forms</span></a></li>
-              <li class="nav-item "><a class="nav-link" href="../../pages/components/modals.html"><span>Modals</span></a></li>
-              <li class="nav-item "><a class="nav-link" href="../../pages/components/typography.html"><span>Typography</span></a></li>
-          </ul>
-      </div>
-      </li>
-      <li role="separator" class="dropdown-divider mt-4 mb-3 border-black"></li>
-      <li class="nav-item">
-      <a href="../../index.html" class="nav-link d-flex align-items-center">
-          <span class="sidebar-icon">
-          <img src="../../assets/img/brand/light.svg" height="20" width="20" alt="Volt Logo">
-          </span>
-          <span class="mt-1">Volt Overview</span>
-      </a>
-      </li>
-      <li class="nav-item">
-      <a href="https://themesberg.com/docs/volt-bootstrap-5-dashboard/getting-started/quick-start/" target="_blank" class="nav-link d-flex align-items-center">
-          <span class="sidebar-icon"><span class="fas fa-book"></span></span>
-          <span>Quick Start</span>
-      </a>
-      </li>
-      <li class="nav-item">
-      <a href="https://themesberg.com/product/admin-dashboard/volt-premium-bootstrap-5-dashboard" target="_blank" class="nav-link d-flex align-items-center">
-          <span class="sidebar-icon"><span class="fas fa-rocket"></span></span>
-          <span>Upgrade to Pro</span>
-      </a>
-      </li>
-      <li class="nav-item">
-      <a href="https://themesberg.com" target="_blank" class="nav-link d-flex align-items-center">
-          <span class="sidebar-icon">
-          <img src="../../assets/img/themesberg.svg" height="20" width="20" alt="Themesberg Logo">
-          </span>
-          <span>Themesberg</span>
-      </a>
-      </li>
+
+      {{-- Sidebar Admin --}}
+    @can('isAdmin')
+    <li class="nav-item ">
+    <a href="{{ route('dashboard.admin') }}" class="nav-link">
+        <span class="sidebar-icon"><span class="fas fa-chart-pie"></span></span>
+        <span>Dashboard</span>
+    </a>
+    </li>
+  <li class="nav-item">
+    <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-toggle="collapse" data-target="#submenu-app">
+        <span>
+        <span class="sidebar-icon"><span class="fas fa-table"></span></span> 
+        Anggota
+        </span>
+        <span class="link-arrow"><span class="fas fa-chevron-right"></span></span> 
+    </span>
+    <div class="multi-level collapse {{ (Request::route()->getName() == 'anggota.index') ||
+                                        (Request::route()->getName() == 'anggota.create') || 
+                                        (Request::route()->getName() == 'anggota.show')  ? 'show' : '' }}" role="list" id="submenu-app" aria-expanded="false">
+        <ul class="flex-column nav">
+            <li class="nav-item {{ (Request::route()->getName() == 'anggota.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('anggota.index') }}"><span>Data Anggota</span></a></li>
+            <li class="nav-item {{ (Request::route()->getName() == 'anggota.create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('anggota.create') }}"><span>Tambah Anggota</span></a></li>
+        </ul>
+    </div>
+    </li>
+
+    {{-- Sidebar Ketua --}}
+    @elsecan('isKetua')
+    <li class="nav-item ">
+        <a href="{{ route('dashboard.ketua') }}" class="nav-link">
+            <span class="sidebar-icon"><span class="fas fa-chart-pie"></span></span>
+            <span>Dashboard</span>
+        </a>
+        </li>
+    @endcan
+
+    
+      
   </ul>
   </div>
 </nav>

@@ -4,6 +4,17 @@
 
 @section('content')
 
+<div class="py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+            <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+            <li class="breadcrumb-item"><a href="#">Anggota</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Data Anggota</li>
+        </ol>
+    </nav>
+   
+</div>
+
 <div class="row">
     <div class="col-12 mb-4">
         <div class="card border-light shadow-sm components-section">
@@ -13,10 +24,12 @@
                       <div class="table-settings mb-4">
                         <div class="row align-items-center justify-content-between">
                             <div class="col col-md-6 col-lg-3 col-xl-4">
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon2"><span class="fas fa-search"></span></span>
-                                    <input type="text" class="form-control" id="exampleInputIconLeft" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
-                                </div>
+                                <form action="">
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon2"><span class="fas fa-search"></span></span>
+                                        <input type="text" name="q" class="form-control" id="exampleInputIconLeft" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
+                                    </div>
+                                </form>
                             </div>
                             <div class="col-4 col-md-2 col-xl-1 pl-md-0 text-right">
                                 <div class="btn-group">
@@ -41,6 +54,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>No. kTP</th>
                                     <th>Nama</th>						
                                     <th>Kota</th>
@@ -50,8 +64,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                              @foreach ($data_anggota as $data)
+                              @foreach ($anggota as $data)
                               <tr>
+                                  <td>{{ $loop->iteration }}</td>
                                   <td>
                                       <a href="{{ route('anggota.edit', $data->id) }}" class="font-weight-bold">
                                         {{ $data->no_ktp }}
@@ -89,32 +104,7 @@
                             </tbody>
                         </table>
                         <div class="card-footer px-3 border-0 d-flex align-items-center justify-content-between">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination mb-0">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">Previous</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">1</a>
-                                    </li>
-                                    <li class="page-item active">
-                                        <a class="page-link" href="#">2</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">3</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">4</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">5</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                            <div class="font-weight-bold small">Showing <b>5</b> out of <b>25</b> entries</div>
+                           {{ $anggota->links() }}
                         </div>
                     </div>
                     <footer class="footer section py-2">

@@ -8,14 +8,14 @@ Auth::routes(['register' => false]);
 Route::prefix('admin')
     ->middleware('auth')
     ->group(function () {
-        Route::get('/', 'Admin\DashboardController@index')->name('admin');
+        Route::get('/', 'Admin\DashboardController@index')->name('dashboard.admin');
         Route::resource('anggota', 'Admin\AnggotaController');
     });
 
 Route::prefix('ketua')
     ->middleware('ketua')
     ->group(function () {
-        Route::get('/', 'Ketua\DashboardController@index')->name('ketua');
+        Route::get('/', 'Ketua\DashboardController@index')->name('dashboard.ketua');
     });
 
 Route::get('/home', 'HomeController@index');

@@ -4,16 +4,53 @@
 
 @section('content')
 
+    @if (session('success'))
+    @push('scripts')
+    <script>
+        swal({
+        title: "Good job!",
+        text: "{{ session('success') }}",
+        icon: "success",
+        button: false,
+        timer: 2000
+    });
+    </script>
+    @endpush
+
+    @elseif(session('error'))
+    @push('scripts')
+    <script>
+        swal({
+        title: "Sorry",
+        text: "{{ session('error') }}",
+        icon: "error",
+        button: false,
+        timer: 2000
+    });
+    </script>
+    @endpush
+    @endif
+
+
+<div class="py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+            <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+            <li class="breadcrumb-item"><a href="#">Anggota</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Tambah Anggota</li>
+        </ol>
+    </nav>
+   
+</div>
+
 <div class="row">
     <div class="col-12 mb-4">
         <div class="card border-light shadow-sm components-section">
             <div class="card-body">     
+                <form action="{{ route('anggota.store') }}" method="post">
+                    @csrf
                 <div class="row mb-4">
-                    <div class="col-lg-4 col-sm-6">
-
-                    <form action="{{ route('anggota.store') }}" method="post">
-                            @csrf
-
+                        <div class="col-lg-5 col-sm-6">
                             <div class="mb-3">
                                 <label for="ktp">No. KTP</label>
                                 <input type="text" class="form-control {{ $errors->first('no_ktp') ? 'is-invalid' : '' }}" id="no_ktp" name="no_ktp">
@@ -55,6 +92,9 @@
                                     {{$errors->first('alamat')}}
                                 </div>
                             </div>
+                        </div>
+                        
+                        <div class="col-lg-5 col-sm-6">
                             <div class="mb-3">
                                 <label for="kota">Kota</label>
                                 <div class="input-group">
@@ -101,13 +141,12 @@
                                 <small class="form-text text-muted">Sebagai syarat tanda keanggotan</small>
                             </div>
                             <div class="mb-3">
-                                <input type="submit" value="Simpan">
-                                {{-- <button type="submit" class="btn btn-secondary">Simpan</button> --}}
+                                {{-- <input type="submit" value="Simpan"> --}}
+                                <button type="submit" class="btn btn-secondary text-dark">Simpan</button>
                             </div>
-                        </form>
-                        
+                        </div>
                     </div>
-                </div>
+                </form>
                 
             </div>
         </div>

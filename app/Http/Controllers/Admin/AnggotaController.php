@@ -13,10 +13,16 @@ class AnggotaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data_anggota = Anggota::all();
-        return view('member.anggota_index', compact('data_anggota'));
+        $search =  $request->input('q');
+        if ($search) {
+            $anggota = Anggota::where('nama_anggota', 'like', '%' . $search . '%')
+                ->latest()->paginate(6);
+        } else {
+            $anggota = Anggota::latest()->paginate(6);
+        }
+        return view('admin.member.anggota_index', compact('anggota'));
     }
 
     /**
@@ -26,7 +32,7 @@ class AnggotaController extends Controller
      */
     public function create()
     {
-        return view('member.anggota_create');
+        return view('admin.member.anggota_create');
     }
 
     /**
@@ -48,10 +54,8 @@ class AnggotaController extends Controller
         ]);
 
         $data = $request->all();
-
         Anggota::create($data);
-
-        return redirect()->route('anggota.create')->with(['status' => 'Data Anggota Berhasil Ditambahkan']);
+        return redirect()->back()->with(['success' => 'Data Anggota Berhasil Ditambahkan']);
     }
 
     /**
@@ -74,7 +78,7 @@ class AnggotaController extends Controller
     public function edit($anggotum)
     {
         $anggota = Anggota::Find($anggotum);
-        return view('member.anggota_show', compact('anggota'));
+        return view('admin.member.anggota_show', compact('anggota'));
     }
 
     /**
@@ -100,7 +104,6 @@ class AnggotaController extends Controller
         $data = $request->all();
 
         $anggota->update($data);
-
         return redirect()->route('anggota.index')->with(['status' => 'Data Berhasil Diubah']);
     }
 

@@ -35,3 +35,5 @@
 
 <!-- Volt JS -->
 <script src="{{ asset('assets/js/volt.js') }}"></script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

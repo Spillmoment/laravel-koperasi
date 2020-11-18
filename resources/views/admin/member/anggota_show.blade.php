@@ -4,6 +4,17 @@
 
 @section('content')
 
+
+<div class="py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+            <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+            <li class="breadcrumb-item"><a href="#">Anggota</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Detail Anggota</li>
+        </ol>
+    </nav>
+</div>
+
 <div class="row">
     <div class="col-12 mb-4">
         <div class="card border-light shadow-sm components-section">
