@@ -32,7 +32,7 @@
         <div class="row">
             <div class="col-12">
     
-                @include('layouts/navbar')
+                @include('layouts.navbar')
 
                 <main class="content">
 
