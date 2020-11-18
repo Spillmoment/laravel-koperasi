@@ -53,6 +53,23 @@
       </div>
       </li>
       <li class="nav-item">
+      <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-toggle="collapse" data-target="#submenu-app">
+          <span>
+          <span class="sidebar-icon"><span class="fas fa-table"></span></span> 
+          Simpanan
+          </span>
+          <span class="link-arrow"><span class="fas fa-chevron-right"></span></span> 
+      </span>
+      <div class="multi-level collapse {{ (Request::route()->getName() == 'simpanan.index') ||
+                                          (Request::route()->getName() == 'simpanan.create') || 
+                                          (Request::route()->getName() == 'simpanan.show')  ? 'show' : '' }}" role="list" id="submenu-app" aria-expanded="false">
+          <ul class="flex-column nav">
+              <li class="nav-item {{ (Request::route()->getName() == 'simpanan.create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('simpanan.create') }}"><span>Tambah simpanan</span></a></li>
+              <li class="nav-item {{ (Request::route()->getName() == 'simpanan.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('simpanan.index') }}"><span>Data simpanan</span></a></li>
+          </ul>
+      </div>
+      </li>
+      <li class="nav-item">
       <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-toggle="collapse" data-target="#submenu-pages">
           <span>
           <span class="sidebar-icon"><span class="far fa-file-alt"></span></span> 
