@@ -14,7 +14,9 @@ class SimpananController extends Controller
      */
     public function index()
     {
-        //
+        $data_simpanan = Simpanan::with(['anggota'])->get();
+        // dd($data_simpanan);
+        return view('member.simpanan.simpanan_index', compact('data_simpanan'));
     }
 
     /**
@@ -24,7 +26,7 @@ class SimpananController extends Controller
      */
     public function create()
     {
-        //
+        return view('member.simpanan.simpanan_create');
     }
 
     /**
@@ -35,7 +37,18 @@ class SimpananController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'anggota_id' => 'required',
+            'jenis_simpanan' => 'required|in:pokok,sukarela,wajib,lain',
+            'nominal' => 'required|numeric',
+            'keterangan' => 'max:200',
+        ]);
+
+        $data = $request->all();
+
+        Simpanan::create($data);
+
+        return redirect()->route('simpanan.create')->with(['status' => 'Data Simpanan Berhasil Ditambahkan']);
     }
 
     /**
