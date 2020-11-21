@@ -31,7 +31,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="col-4 col-md-2 col-xl-1 pl-md-0 text-right">
+                            {{-- <div class="col-4 col-md-2 col-xl-1 pl-md-0 text-right">
                                 <div class="btn-group">
                                     <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="icon icon-sm icon-gray">
@@ -46,7 +46,7 @@
                                         <a class="dropdown-item font-weight-bold" href="#">30</a>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                       </div>
                       
