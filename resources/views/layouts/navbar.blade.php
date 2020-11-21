@@ -6,9 +6,14 @@
           <img src="../../assets/img/team/profile-picture-3.jpg" class="card-img-top rounded-circle border-white" alt="Bonnie Green">
       </div>
       <div class="d-block">
-          <h2 class="h6">Hi, Jane</h2>
-          <a href="../../pages/examples/sign-in.html" class="btn btn-secondary text-dark btn-xs"><span class="mr-2"><span class="fas fa-sign-out-alt"></span></span>Sign Out</a>
+          <h2 class="h6">Hi, {{ auth()->user()->name }}</h2>
+          <a href="{{ route('logout') }}" onclick="event.preventDefault();
+          document.getElementById('logout-form').submit();" class="btn btn-secondary text-dark btn-xs"><span class="mr-2"><span class="fas fa-sign-out-alt"></span></span>Sign Out</a>
       </div>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST"
+      style="display: none;">
+      @csrf
+  </form>
       </div>
       <div class="collapse-close d-md-none">
           <a href="#sidebarMenu" class="fas fa-times" data-toggle="collapse"
