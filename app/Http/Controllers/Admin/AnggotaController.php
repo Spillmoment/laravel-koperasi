@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+<<<<<<< HEAD:app/Http/Controllers/Admin/AnggotaController.php
 use App\Http\Controllers\Controller;
+=======
+use App\Anggota;
+use App\JenisSimpanan;
+use App\Simpanan;
+>>>>>>> origin/fitur-simpanan:app/Http/Controllers/AnggotaController.php
 use Illuminate\Http\Request;
 use App\Anggota;
 
@@ -32,7 +38,12 @@ class AnggotaController extends Controller
      */
     public function create()
     {
+<<<<<<< HEAD:app/Http/Controllers/Admin/AnggotaController.php
         return view('admin.member.anggota_create');
+=======
+        $min_simpanan = JenisSimpanan::find(1);
+        return view('member.anggota_create', compact('min_simpanan'));
+>>>>>>> origin/fitur-simpanan:app/Http/Controllers/AnggotaController.php
     }
 
     /**
@@ -44,18 +55,45 @@ class AnggotaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'no_ktp' => 'required|unique:anggota|digits:16',
+            'no_ktp' => 'required|unique:anggota|digits:3',
             'nama_anggota' => 'required|string|max:100',
             'jenis_kelamin' => 'required|in:laki-laki,perempuan',
             'alamat' => 'required|max:200',
             'kota' => 'required|max:20',
             'telepon' => 'required|max:12',
-            'pengurus' => 'required|in:pengurus,bukan_pengurus'
+            'pengurus' => 'required|in:pengurus,bukan_pengurus',
         ]);
 
+<<<<<<< HEAD:app/Http/Controllers/Admin/AnggotaController.php
         $data = $request->all();
         Anggota::create($data);
         return redirect()->back()->with(['success' => 'Data Anggota Berhasil Ditambahkan']);
+=======
+        // $data = $request->all();
+
+        // Anggota::create($data);
+        $min_simpanan = JenisSimpanan::find(1);
+
+        $anggota = new Anggota;
+        $anggota->no_ktp = $request->no_ktp;
+        $anggota->nama_anggota = $request->nama_anggota;
+        $anggota->jenis_kelamin = $request->jenis_kelamin;
+        $anggota->alamat = $request->alamat;
+        $anggota->kota = $request->kota;
+        $anggota->telepon = $request->telepon;
+        $anggota->pengurus = $request->pengurus;
+        $anggota->save();
+
+        $simpanan = new Simpanan;
+        // $simpanan->anggota_id = $anggota->id;
+        $simpanan->jenis_simpanan_id = $min_simpanan->id;
+        $simpanan->nominal = $min_simpanan->minimal_simpan;
+        $simpanan->keterangan = 'Simpanan wajib saat pendaftaran';
+
+        $anggota->simpanan()->save($simpanan);
+
+        return redirect()->route('anggota.create')->with(['status' => 'Data Anggota Berhasil Ditambahkan']);
+>>>>>>> origin/fitur-simpanan:app/Http/Controllers/AnggotaController.php
     }
 
     /**

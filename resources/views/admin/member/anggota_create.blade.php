@@ -137,8 +137,11 @@
                             </div>
                             <div class="mb-3">
                                 <label for="simpanan_wajib">Simpanan Wajib</label>
-                                <input type="text" class="form-control" id="simpanan_wajib" name="simpanan_wajib" disabled value="1xxx000">
+                                <input type="text" class="form-control" id="simpanan_wajib" name="simpanan_wajib" value="{{ $min_simpanan->minimal_simpan }}" disabled>
                                 <small class="form-text text-muted">Sebagai syarat tanda keanggotan</small>
+                                <div class="invalid-feedback">
+                                    {{$errors->first('simpanan_wajib')}}
+                                </div>
                             </div>
                             <div class="mb-3">
                                 {{-- <input type="submit" value="Simpan"> --}}
