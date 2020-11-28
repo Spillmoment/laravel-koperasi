@@ -9,6 +9,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return '<h1>Halaman Ketua</h1>';
+        return view('ketua.dashboard.index');
     }
 }
