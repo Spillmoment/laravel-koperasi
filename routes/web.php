@@ -22,6 +22,6 @@ Route::prefix('ketua')
     ->middleware('ketua')
     ->group(function () {
         Route::get('/', 'Ketua\DashboardController@index')->name('dashboard.ketua');
+        Route::resource('jenis-simpanan', 'Ketua\JenisSimpananController');
     });
 
-Route::get('/home', 'HomeController@index');
