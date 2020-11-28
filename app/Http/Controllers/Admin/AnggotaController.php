@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-<<<<<<< HEAD:app/Http/Controllers/Admin/AnggotaController.php
 use App\Http\Controllers\Controller;
-=======
 use App\Anggota;
 use App\JenisSimpanan;
 use App\Simpanan;
->>>>>>> origin/fitur-simpanan:app/Http/Controllers/AnggotaController.php
 use Illuminate\Http\Request;
-use App\Anggota;
 
 class AnggotaController extends Controller
 {
@@ -38,12 +34,9 @@ class AnggotaController extends Controller
      */
     public function create()
     {
-<<<<<<< HEAD:app/Http/Controllers/Admin/AnggotaController.php
-        return view('admin.member.anggota_create');
-=======
+
         $min_simpanan = JenisSimpanan::find(1);
-        return view('member.anggota_create', compact('min_simpanan'));
->>>>>>> origin/fitur-simpanan:app/Http/Controllers/AnggotaController.php
+        return view('admin.member.anggota_create', compact('min_simpanan'));
     }
 
     /**
@@ -55,7 +48,7 @@ class AnggotaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'no_ktp' => 'required|unique:anggota|digits:3',
+            'no_ktp' => 'required|unique:anggota|digits:16',
             'nama_anggota' => 'required|string|max:100',
             'jenis_kelamin' => 'required|in:laki-laki,perempuan',
             'alamat' => 'required|max:200',
@@ -63,13 +56,6 @@ class AnggotaController extends Controller
             'telepon' => 'required|max:12',
             'pengurus' => 'required|in:pengurus,bukan_pengurus',
         ]);
-
-<<<<<<< HEAD:app/Http/Controllers/Admin/AnggotaController.php
-        $data = $request->all();
-        Anggota::create($data);
-        return redirect()->back()->with(['success' => 'Data Anggota Berhasil Ditambahkan']);
-=======
-        // $data = $request->all();
 
         // Anggota::create($data);
         $min_simpanan = JenisSimpanan::find(1);
@@ -93,7 +79,6 @@ class AnggotaController extends Controller
         $anggota->simpanan()->save($simpanan);
 
         return redirect()->route('anggota.create')->with(['status' => 'Data Anggota Berhasil Ditambahkan']);
->>>>>>> origin/fitur-simpanan:app/Http/Controllers/AnggotaController.php
     }
 
     /**
@@ -151,6 +136,7 @@ class AnggotaController extends Controller
      * @param  \App\Anggota  $anggota
      * @return \Illuminate\Http\Response
      */
+
     public function destroy($anggotum)
     {
         $anggota = Anggota::findOrFail($anggotum);
