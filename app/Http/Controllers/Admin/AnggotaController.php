@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Anggota;
+use App\JenisSimpanan;
+use App\Simpanan;
+use Illuminate\Http\Request;
 
 class AnggotaController extends Controller
 {
@@ -32,7 +34,9 @@ class AnggotaController extends Controller
      */
     public function create()
     {
-        return view('admin.member.anggota_create');
+
+        $min_simpanan = JenisSimpanan::find(1);
+        return view('admin.member.anggota_create', compact('min_simpanan'));
     }
 
     /**
@@ -50,12 +54,31 @@ class AnggotaController extends Controller
             'alamat' => 'required|max:200',
             'kota' => 'required|max:20',
             'telepon' => 'required|max:12',
-            'pengurus' => 'required|in:pengurus,bukan_pengurus'
+            'pengurus' => 'required|in:pengurus,bukan_pengurus',
         ]);
 
-        $data = $request->all();
-        Anggota::create($data);
-        return redirect()->back()->with(['success' => 'Data Anggota Berhasil Ditambahkan']);
+        // Anggota::create($data);
+        $min_simpanan = JenisSimpanan::find(1);
+
+        $anggota = new Anggota;
+        $anggota->no_ktp = $request->no_ktp;
+        $anggota->nama_anggota = $request->nama_anggota;
+        $anggota->jenis_kelamin = $request->jenis_kelamin;
+        $anggota->alamat = $request->alamat;
+        $anggota->kota = $request->kota;
+        $anggota->telepon = $request->telepon;
+        $anggota->pengurus = $request->pengurus;
+        $anggota->save();
+
+        $simpanan = new Simpanan;
+        // $simpanan->anggota_id = $anggota->id;
+        $simpanan->jenis_simpanan_id = $min_simpanan->id;
+        $simpanan->nominal = $min_simpanan->minimal_simpan;
+        $simpanan->keterangan = 'Simpanan wajib saat pendaftaran';
+
+        $anggota->simpanan()->save($simpanan);
+
+        return redirect()->route('anggota.create')->with(['status' => 'Data Anggota Berhasil Ditambahkan']);
     }
 
     /**
@@ -113,6 +136,7 @@ class AnggotaController extends Controller
      * @param  \App\Anggota  $anggota
      * @return \Illuminate\Http\Response
      */
+
     public function destroy($anggotum)
     {
         $anggota = Anggota::findOrFail($anggotum);
