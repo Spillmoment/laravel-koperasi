@@ -57,7 +57,7 @@ a<nav id="sidebarMenu" class="sidebar d-md-block bg-primary text-white collapse"
             </li>
             <li class="nav-item">
                 <span class="nav-link  collapsed  d-flex justify-content-between align-items-center"
-                    data-toggle="collapse" data-target="#submenu-app">
+                    data-toggle="collapse" data-target="#pinjaman-app">
                     <span>
                         <span class="sidebar-icon"><span class="fas fa-table"></span></span>
                         Pinjaman
@@ -67,20 +67,20 @@ a<nav id="sidebarMenu" class="sidebar d-md-block bg-primary text-white collapse"
                 <div class="multi-level collapse {{ (Request::route()->getName() == 'anggota.index') ||
                                         (Request::route()->getName() == 'anggota.create') || 
                                         (Request::route()->getName() == 'anggota.show')  ? 'show' : '' }}" role="list"
-                    id="submenu-app" aria-expanded="false">
+                    id="pinjaman-app" aria-expanded="false">
                     <ul class="flex-column nav">
                         <li class="nav-item {{ (Request::route()->getName() == 'anggota.index') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('anggota.index') }}"><span>Data Anggota</span></a>
+                            <a class="nav-link" href="{{ route('anggota.index') }}"><span>Data Pinjaman</span></a>
                         </li>
                         <li class="nav-item {{ (Request::route()->getName() == 'anggota.create') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('anggota.create') }}"><span>Tambah Anggota</span></a>
+                            <a class="nav-link" href="{{ route('anggota.create') }}"><span>Tambah Pinjaman</span></a>
                         </li>
                     </ul>
                 </div>
             </li>
             <li class="nav-item">
                 <span class="nav-link  collapsed  d-flex justify-content-between align-items-center"
-                    data-toggle="collapse" data-target="#submenu-app">
+                    data-toggle="collapse" data-target="#simpanan-app">
                     <span>
                         <span class="sidebar-icon"><span class="fas fa-database"></span></span>
                         Simpanan
@@ -90,13 +90,13 @@ a<nav id="sidebarMenu" class="sidebar d-md-block bg-primary text-white collapse"
                 <div class="multi-level collapse {{ (Request::route()->getName() == 'anggota.index') ||
                                         (Request::route()->getName() == 'anggota.create') || 
                                         (Request::route()->getName() == 'anggota.show')  ? 'show' : '' }}" role="list"
-                    id="submenu-app" aria-expanded="false">
+                    id="simpanan-app" aria-expanded="false">
                     <ul class="flex-column nav">
                         <li class="nav-item {{ (Request::route()->getName() == 'anggota.index') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('anggota.index') }}"><span>Data Anggota</span></a>
+                            <a class="nav-link" href="{{ route('anggota.index') }}"><span>Data Simpanan</span></a>
                         </li>
                         <li class="nav-item {{ (Request::route()->getName() == 'anggota.create') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('anggota.create') }}"><span>Tambah Anggota</span></a>
+                            <a class="nav-link" href="{{ route('anggota.create') }}"><span>Tambah Simpanan</span></a>
                         </li>
                     </ul>
                 </div>
