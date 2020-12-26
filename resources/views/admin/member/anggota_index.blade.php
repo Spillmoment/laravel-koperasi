@@ -45,7 +45,7 @@
 
 @endsection
 
-@push('script')
+@push('scripts')
 <script>
     // AJAX DataTable
     var datatable = $('#crudTable').DataTable({
