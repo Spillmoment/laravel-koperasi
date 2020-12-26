@@ -54,16 +54,8 @@
     @stack('prepend-script')
     <script src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables/js/dataTables.bootstrap5.min.js') }}"></script>
-    <script>
-        $("#datatable").DataTable({
-            rowReorder: {
-                selector: 'td:nth-child(2)'
-            },
-            responsive: true
-        });
-
-    </script>
-    @stack('script')
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    @stack('scripts')
 </body>
 
 </html>
