@@ -1,4 +1,4 @@
-a<nav id="sidebarMenu" class="sidebar d-md-block bg-primary text-white collapse" data-simplebar>
+<nav id="sidebarMenu" class="sidebar d-md-block bg-primary text-white collapse" data-simplebar>
     <div class="sidebar-inner px-4 pt-3">
         <div
             class="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">

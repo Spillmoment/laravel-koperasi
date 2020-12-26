@@ -5,6 +5,9 @@
 <!-- Vendor JS -->
 <script src="{{ asset('vendor/onscreen/dist/on-screen.umd.min.js') }}"></script>
 
+<!-- JQuery JS -->
+<script src="{{ asset('vendor/jquery/jquery-3.5.1.min.js') }}"></script>
+
 <!-- Slider -->
 <script src="{{ asset('vendor/nouislider/distribute/nouislider.min.js') }}"></script>
 

@@ -38,7 +38,7 @@
                         aria-expanded="false">
                         <div class="media d-flex align-items-center">
                             <img class="user-avatar md-avatar rounded-circle" alt="Image placeholder"
-                                src="https://yt3.ggpht.com/ytc/AAUvwngMp380bo6VdFqO0Y81qDqJKsedWvTosxGAAZwp=s900-c-k-c0x00ffffff-no-rj">
+                                src="{{ ImageUrl(auth()->user()->image) }}">
                             <div class="media-body ml-2 text-dark align-items-center d-none d-lg-block">
                                 <span class="mb-0 font-small font-weight-bold">{{ Auth::user()->name }}</span>
                             </div>
@@ -66,7 +66,7 @@
                         aria-expanded="false">
                         <div class="media d-flex align-items-center">
                             <img class="user-avatar md-avatar rounded-circle" alt="Image placeholder"
-                                src="{{ Storage::url('public/'. auth()->user()->image) }}">
+                                src="{{ ImageUrl(auth()->user()->image) }}">
                             <div class="media-body ml-2 text-dark align-items-center d-none d-lg-block">
                                 <span class="mb-0 font-small font-weight-bold">{{ Auth::user()->name }}</span>
                             </div>
