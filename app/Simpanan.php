@@ -17,7 +17,7 @@ class Simpanan extends Model
     {
         return $this->belongsTo(Anggota::class, 'anggota_id');
     }
-    
+
     public function jenis_simpanan()
     {
         return $this->belongsTo(JenisSimpanan::class, 'jenis_simpanan_id');
