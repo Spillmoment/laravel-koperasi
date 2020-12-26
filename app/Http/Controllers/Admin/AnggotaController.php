@@ -7,31 +7,54 @@ use App\Anggota;
 use App\JenisSimpanan;
 use App\Simpanan;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class AnggotaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+
+    public function index()
     {
-        $search =  $request->input('q');
-        if ($search) {
-            $anggota = Anggota::where('nama_anggota', 'like', '%' . $search . '%')
-                ->latest()->paginate(6);
-        } else {
-            $anggota = Anggota::latest()->paginate(6);
+        if (request()->ajax()) {
+            $query = Anggota::query();
+
+            return DataTables::of($query)
+                ->addColumn('action', function ($item) {
+                    return '
+                        <div class="btn-group">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle mr-1 mb-1" 
+                                    type="button" id="action' .  $item->id . '"
+                                        data-toggle="dropdown" 
+                                        aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Aksi
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="action' .  $item->id . '">
+                                    <a class="dropdown-item" href="' . route('anggota.edit', $item->id) . '">
+                                        Sunting
+                                    </a>
+                                    <form action="' . route('anggota.destroy', $item->id) . '" method="POST">
+                                        ' . method_field('delete') . csrf_field() . '
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                    </div>';
+                })
+                ->editColumn('pengurus', function ($item) {
+                    return $item->pengurus == 'pengurus'
+                        ? '<span class="text-success">' . $item->pengurus . '</span>'
+                        : '<span class="text-warning">' . $item->pengurus . '</span>';
+                })
+                ->rawColumns(['action', 'pengurus'])
+                ->make();
         }
-        return view('admin.member.anggota_index', compact('anggota'));
+
+        return view('admin.member.anggota_index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
 
@@ -39,12 +62,6 @@ class AnggotaController extends Controller
         return view('admin.member.anggota_create', compact('min_simpanan'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -81,36 +98,17 @@ class AnggotaController extends Controller
         return redirect()->route('anggota.create')->with(['status' => 'Data Anggota Berhasil Ditambahkan']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Anggota  $anggota
-     * @return \Illuminate\Http\Response
-     */
     public function show(Anggota $anggota)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Anggota  $anggota
-     * @return \Illuminate\Http\Response
-     */
     public function edit($anggotum)
     {
         $anggota = Anggota::Find($anggotum);
         return view('admin.member.anggota_show', compact('anggota'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Anggota  $anggota
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $anggotum)
     {
         $request->validate([
@@ -129,13 +127,6 @@ class AnggotaController extends Controller
         $anggota->update($data);
         return redirect()->route('anggota.index')->with(['status' => 'Data Berhasil Diubah']);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Anggota  $anggota
-     * @return \Illuminate\Http\Response
-     */
 
     public function destroy($anggotum)
     {
