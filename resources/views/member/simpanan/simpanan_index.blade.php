@@ -58,7 +58,7 @@
                                   <td>
                                       <span class="font-weight-normal">{{ $data->anggota->nama_anggota }}</span>
                                   </td>
-                                <td><span class="font-weight-normal">{{ $data->jenis_simpanan }}</span></td> 
+                                <td><span class="font-weight-normal">{{ ucwords($data->jenis_simpanan->nama_simpanan) }}</span></td> 
                                 <td><span class="font-weight-bold">{{ $data->nominal }}</span></td>
                                   <td><span class="font-weight-bold">{{ $data->keterangan == '' ? '-' : $data->keterangan }}</span></td>
                                   <td>

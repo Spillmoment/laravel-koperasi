@@ -54,14 +54,20 @@
                             <div class="col-lg-5 col-sm-6">
                                 <div class="mb-3">
                                     <label for="nama_simpanan">Nama Simpanan</label>
-                                    <input type="text" class="form-control {{ $errors->first('nama_simpanan') ? 'is-invalid' : '' }}" id="nama_simpanan" name="nama_simpanan" value="{{ $simpanan->nama_simpanan  }}">
+                                    <input type="text"
+                                           class="form-control {{ $errors->first('nama_simpanan') ? 'is-invalid' : '' }}"
+                                           id="nama_simpanan" name="nama_simpanan"
+                                           value="{{ $simpanan->nama_simpanan  }}">
                                     <div class="invalid-feedback">
                                         {{$errors->first('nama_simpanan')}}
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="minimal_simpan">Minimal Simpan</label>
-                                    <input type="number" class="form-control {{ $errors->first('minimal_simpan') ? 'is-invalid' : '' }}" id="minimal_simpan" name="minimal_simpan" value="{{ $simpanan->minimal_simpan  }}">
+                                    <input type="number"
+                                           class="form-control {{ $errors->first('minimal_simpan') ? 'is-invalid' : '' }}"
+                                           id="minimal_simpan" name="minimal_simpan"
+                                           value="{{ $simpanan->minimal_simpan  }}">
                                     <div class="invalid-feedback">
                                         {{$errors->first('minimal_simpan')}}
                                     </div>
