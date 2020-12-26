@@ -14,7 +14,7 @@ class SimpananController extends Controller
      */
     public function index()
     {
-        $data_simpanan = Simpanan::with(['anggota'])->get();
+        $data_simpanan = Simpanan::with(['anggota','jenis_simpanan'])->get();
         // dd($data_simpanan);
         return view('member.simpanan.simpanan_index', compact('data_simpanan'));
     }
@@ -94,5 +94,11 @@ class SimpananController extends Controller
     public function destroy(Simpanan $simpanan)
     {
         //
+    }
+
+    public function anggota()
+    {
+        dd('ajdf');
+        return view('member.simpanan.simpanan_anggota');
     }
 }
