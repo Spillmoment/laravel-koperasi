@@ -134,8 +134,16 @@
 
             <li class="nav-item ">
                 <a href="{{ route('jenis-simpanan.index') }}" class="nav-link">
-                    <span class="sidebar-icon"><span class="fas fa-database"></span></span>
+                    <span class="sidebar-icon"><span class="fas fa-book"></span></span>
                     <span>Jenis Simpanan</span>
+                </a>
+            </li>
+
+
+            <li class="nav-item {{ (Request::route()->getName() == 'simpanan.index') ? 'active' : '' }}">
+                <a href="{{ route('simpanan.index') }}" class="nav-link">
+                    <span class="sidebar-icon"><span class="fas fa-database"></span></span>
+                    <span>Data Simpanan</span>
                 </a>
             </li>
             @endcan

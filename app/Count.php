@@ -3,15 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Simpanan extends Model
+class Count extends Model
 {
-    protected $table = 'simpanan';
-    protected $primaryKey = 'id';
-    protected $fillable = ['anggota_id', 'jenis_simpanan_id', 'nominal', 'keterangan'];
-
-    use SoftDeletes;
+    protected $table = 'count';
 
     public function anggota()
     {
