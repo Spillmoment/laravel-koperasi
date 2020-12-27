@@ -11,7 +11,7 @@ class JenisSimpananController extends Controller
 
     public function index()
     {
-        $jenis_simpanan = JenisSimpanan::orderBy('created_at','desc')->paginate(10);
+        $jenis_simpanan = JenisSimpanan::orderBy('created_at', 'desc')->paginate(10);
         return view('ketua.pinjaman.index', compact('jenis_simpanan'));
     }
 
@@ -30,7 +30,8 @@ class JenisSimpananController extends Controller
         ]);
 
         JenisSimpanan::create($request->all());
-        return redirect()->route('jenis-pinjaman.index')->with(['status' => 'Data Jenis Simpanan Berhasil Ditambahkan']);
+        return redirect()->route('jenis-pinjaman.index')
+            ->with(['status' => 'Data Jenis Simpanan Berhasil Ditambahkan']);
     }
 
 
@@ -42,7 +43,7 @@ class JenisSimpananController extends Controller
     public function edit($id)
     {
         $simpanan = JenisSimpanan::findOrFail($id);
-        return view('ketua.pinjaman.show',compact('simpanan'));
+        return view('ketua.pinjaman.show', compact('simpanan'));
     }
 
 
