@@ -25,5 +25,6 @@ Route::prefix('ketua')
         Route::get('/', 'Ketua\DashboardController@index')->name('dashboard.ketua');
         Route::resource('jenis-simpanan', 'Ketua\JenisSimpananController');
         Route::resource('admin', 'Ketua\AdminController');
-        Route::resource('simpanan', 'Ketua\SimpananController');
+        Route::get('cetak_excel', 'Ketua\SimpananController@cetak_excel')->name('simpanan.excel');
+        Route::resource('simpanan', 'Ketua\SimpananController')->except(['create', 'store', 'edit']);
     });

@@ -5,22 +5,66 @@ namespace App\Http\Controllers\Ketua;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Simpanan;
-use App\Pinjaman;
 use App\Anggota;
+use App\Pinjaman;
 use App\Count;
+use Yajra\DataTables\Facades\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\SimpananExports;
 
 class SimpananController extends Controller
 {
-
     public function index()
     {
-        $simpanan = Simpanan::with(['anggota', 'jenis_simpanan'])
-            ->orderBy('created_at', 'asc')
-            ->paginate(12);
+        if (request()->ajax()) {
+            $query = Simpanan::query()->with(['anggota', 'jenis_simpanan']);
 
-        return view('ketua.simpanan.index', [
-            'simpanan' => $simpanan,
-        ]);
+            return DataTables::of($query)
+                ->addColumn('action', function ($item) {
+                    return '
+                        <div class="btn-group">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle mr-1 mb-1" 
+                                    type="button" id="action' .  $item->id . '"
+                                        data-toggle="dropdown" 
+                                        aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Aksi
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="action' .  $item->id . '">
+                                    <a class="dropdown-item" href="' . route('simpanan.show', $item->id) . '">
+                                        Sunting
+                                    </a>
+                                    <form action="' . route('simpanan.destroy', $item->id) . '" method="POST">
+                                        ' . method_field('delete') . csrf_field() . '
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                    </div>';
+                })
+                ->editColumn('created_at', function ($item) {
+                    return $item->created_at->format('d F Y');
+                })
+                ->editColumn('anggota_id', function ($item) {
+                    return $item->anggota->id;
+                })
+                ->addColumn('anggota', function ($item) {
+                    return $item->anggota->nama_anggota;
+                })
+                ->editColumn('jenis_simpanan_id', function ($item) {
+                    return $item->jenis_simpanan->nama_simpanan;
+                })
+                ->editColumn('nominal', function ($item) {
+                    return "Rp." . number_format($item->nominal, 0, ',', '.');
+                })
+                ->rawColumns(['action'])
+                ->make();
+        }
+
+        return view('ketua.simpanan.index');
     }
 
 
@@ -60,19 +104,23 @@ class SimpananController extends Controller
 
     public function update($id)
     {
-        $pinjaman = Pinjaman::findOrFail($id);
-
-        $pinjaman->update([
-            'status' => 'lunas'
-        ]);
-
-        if ($pinjaman) {
+        try {
+            Pinjaman::findOrFail($id)->update(['status' => 'lunas']);
             return redirect()->route('simpanan.show', [$id])->with(['status' => 'Status Berhasil Diupdate']);
+        } catch (\Exception $e) {
+            return redirect()->back();
         }
     }
 
     public function destroy($id)
     {
-        //
+        Simpanan::findOrFail($id)->delete();
+        return redirect()->route('simpanan.index')->with(['status' => 'Simpanan Berhasil Dihapus']);
+    }
+
+    public function cetak_excel()
+    {
+        $tgl = now();
+        return Excel::download(new SimpananExports, 'simpanan_' . $tgl . '.xlsx');
     }
 }
