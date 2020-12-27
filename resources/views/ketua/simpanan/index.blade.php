@@ -33,56 +33,29 @@
 <div class="row">
     <div class="col-12 mb-4">
         <div class="card border-light shadow-sm components-section">
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="{{ route('simpanan.excel') }}" class="btn btn-success ml-2"> <i
+                            class="fas fa-file-excel"></i>
+                        Excel</a>
+                </div>
+            </div>
             <div class="card-body">
                 <div class="row">
-
-                    <table class="table table-hover">
+                    <table class="table table-hover" id="simpananTable">
                         <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal</th>
                                 <th>ID Anggota</th>
                                 <th>Nama Anggota</th>
+                                <th>Jenis Simpanan</th>
                                 <th>Nominal</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($simpanan as $item)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->created_at->format('d F Y') }}</td>
-                                <td>{{ $item->anggota->id }}</td>
-                                <td>{{ $item->anggota->nama_anggota }}</td>
-                                <td>@currency($item->nominal)</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button
-                                            class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span class="icon icon-sm">
-                                                <span class="fas fa-ellipsis-h icon-dark"></span>
-                                            </span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item"
-                                                href="{{ route('simpanan.show', $item->id) }}"><span
-                                                    class="fas fa-eye mr-2"></span>Details</a>
-                                            <a class="dropdown-item text-danger"
-                                                href="{{ route('anggota.destroy', $item->id) }}" onclick="event.preventDefault();
-                                        document.getElementById('delete-form').submit();"><span
-                                                    class="fas fa-trash-alt mr-2"></span>Remove</a>
-                                            <form id="delete-form" action="{{ route('simpanan.destroy', $item->id) }}"
-                                                method="POST" style="display: none;">
-                                                @csrf
-                                                @method('delete')
-                                            </form>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
+
                         </tbody>
                     </table>
                     <footer class="footer section py-2">
@@ -95,3 +68,54 @@
 </div>
 
 @endsection
+@push('scripts')
+
+<script>
+    // AJAX DataTable
+    var datatable = $('#simpananTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ordering: true,
+        ajax: {
+            url: '{!! url()->current() !!}',
+        },
+        columns: [{
+                "data": 'id',
+                "sortable": false,
+                render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                }
+            },
+            {
+                data: 'created_at',
+                name: 'created_at'
+            },
+            {
+                data: 'anggota_id',
+                name: 'anggota_id'
+            },
+            {
+                data: 'anggota',
+                name: 'anggota.nama_anggota'
+            },
+            {
+                data: 'jenis_simpanan_id',
+                name: 'jenis_simpanan_id'
+            },
+            {
+                data: 'nominal',
+                name: 'nominal'
+            },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: false,
+                searchable: false,
+                width: '15%'
+            },
+        ],
+
+    });
+
+</script>
+@endpush
