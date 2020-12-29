@@ -1,4 +1,4 @@
-a<nav id="sidebarMenu" class="sidebar d-md-block bg-primary text-white collapse" data-simplebar>
+<nav id="sidebarMenu" class="sidebar d-md-block bg-primary text-white collapse" data-simplebar>
     <div class="sidebar-inner px-4 pt-3">
         <div
             class="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
@@ -134,8 +134,16 @@ a<nav id="sidebarMenu" class="sidebar d-md-block bg-primary text-white collapse"
 
             <li class="nav-item ">
                 <a href="{{ route('jenis-simpanan.index') }}" class="nav-link">
-                    <span class="sidebar-icon"><span class="fas fa-database"></span></span>
+                    <span class="sidebar-icon"><span class="fas fa-book"></span></span>
                     <span>Jenis Simpanan</span>
+                </a>
+            </li>
+
+
+            <li class="nav-item {{ (Request::route()->getName() == 'simpanan.index') ? 'active' : '' }}">
+                <a href="{{ route('simpanan.index') }}" class="nav-link">
+                    <span class="sidebar-icon"><span class="fas fa-database"></span></span>
+                    <span>Data Simpanan</span>
                 </a>
             </li>
             @endcan

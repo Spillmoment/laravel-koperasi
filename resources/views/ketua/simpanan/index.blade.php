@@ -1,8 +1,19 @@
 @extends('layouts.app')
 
-@section('title', 'Data Admin')
+@section('title', 'Ketua - Data Simpanan')
 
 @section('content')
+
+<div class="py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+            <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+            <li class="breadcrumb-item"><a href="#">Simpanan</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Data Simpanan</li>
+        </ol>
+    </nav>
+
+</div>
 
 @if (session('status'))
 @push('scripts')
@@ -19,36 +30,31 @@
 @endpush
 @endif
 
-<div class="py-4">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
-            <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
-            <li class="breadcrumb-item"><a href="#">Admin</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Data Admin</li>
-        </ol>
-    </nav>
-
-</div>
-
 <div class="row">
     <div class="col-12 mb-4">
         <div class="card border-light shadow-sm components-section">
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="{{ route('simpanan.excel') }}" class="btn btn-success ml-2"> <i
+                            class="fas fa-file-excel"></i>
+                        Excel</a>
+                </div>
+            </div>
             <div class="card-body">
                 <div class="row">
-
-                    <table class="table table-hover" id="userTable">
+                    <table class="table table-hover" id="simpananTable">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama Lengkap</th>
-                                <th>Email</th>
-                                <th>Image</th>
-                                <th>Roles</th>
+                                <th>Tanggal</th>
+                                <th>ID Anggota</th>
+                                <th>Nama Anggota</th>
+                                <th>Jenis Simpanan</th>
+                                <th>Nominal</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-
 
                         </tbody>
                     </table>
@@ -63,9 +69,10 @@
 
 @endsection
 @push('scripts')
+
 <script>
     // AJAX DataTable
-    var datatable = $('#userTable').DataTable({
+    var datatable = $('#simpananTable').DataTable({
         processing: true,
         serverSide: true,
         ordering: true,
@@ -80,20 +87,24 @@
                 }
             },
             {
-                data: 'name',
-                name: 'name'
+                data: 'created_at',
+                name: 'created_at'
             },
             {
-                data: 'email',
-                name: 'email'
+                data: 'anggota_id',
+                name: 'anggota_id'
             },
             {
-                data: 'image',
-                name: 'image'
+                data: 'anggota',
+                name: 'anggota.nama_anggota'
             },
             {
-                data: 'roles',
-                name: 'roles'
+                data: 'jenis_simpanan_id',
+                name: 'jenis_simpanan_id'
+            },
+            {
+                data: 'nominal',
+                name: 'nominal'
             },
             {
                 data: 'action',

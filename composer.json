@@ -15,6 +15,8 @@
         "laravel/framework": "^7.24",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.4",
+        "maatwebsite/excel": "^3.1",
+        "yajra/laravel-datatables-buttons": "^4.10",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
@@ -41,6 +43,9 @@
         "classmap": [
             "database/seeds",
             "database/factories"
+        ],
+        "files": [
+            "app/Helpers/helpers.php"
         ]
     },
     "autoload-dev": {

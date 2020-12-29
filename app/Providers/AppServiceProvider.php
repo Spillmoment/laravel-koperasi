@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('isKetua', function ($user) {
             return $user->roles == 'ketua';
+        });
+
+        Blade::directive('currency', function ($expression) {
+            return "Rp. <?php echo number_format($expression, 0, ',', '.'); ?>";
         });
     }
 }
