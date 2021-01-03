@@ -143,12 +143,19 @@
             </li>
 
 
+            <li class="nav-item {{ (Request::route()->getName() == 'pinjaman-ketua.index') ? 'active' : '' }}">
+                <a href="{{ route('pinjaman-ketua.index') }}" class="nav-link">
+                    <span class="sidebar-icon"><span class="fas fa-database"></span></span>
+                    <span>Data Pinjaman</span>
+                </a>
+            </li>
+{{--             
             <li class="nav-item {{ (Request::route()->getName() == 'simpanan.index') ? 'active' : '' }}">
                 <a href="{{ route('simpanan.index') }}" class="nav-link">
                     <span class="sidebar-icon"><span class="fas fa-database"></span></span>
                     <span>Data Simpanan</span>
-                </a>
-            </li>
+                </a> --}}
+            {{-- </li> --}}
             @endcan
 
 
