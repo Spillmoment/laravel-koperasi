@@ -8,7 +8,6 @@ Auth::routes(['register' => false]);
 Route::prefix('admin')
     ->middleware('auth')
     ->group(function () {
-
         Route::get('/', 'Admin\DashboardController@index')->name('dashboard.admin');
         Route::resource('anggota', 'Admin\AnggotaController');
         Route::get('profile', 'Admin\DashboardController@profile')->name('admin.profile');
@@ -25,6 +24,8 @@ Route::prefix('ketua')
         Route::get('/', 'Ketua\DashboardController@index')->name('dashboard.ketua');
         Route::resource('jenis-simpanan', 'Ketua\JenisSimpananController');
         Route::resource('admin', 'Ketua\AdminController');
-        Route::get('cetak_excel', 'Ketua\SimpananController@cetak_excel')->name('simpanan.excel');
+        Route::get('simpanan_excel', 'Ketua\SimpananController@cetak_excel')->name('simpanan.excel');
         Route::resource('simpanan', 'Ketua\SimpananController')->except(['create', 'store', 'edit']);
+        Route::get('pinjaman_excel', 'Ketua\PinjamanController@cetak_excel')->name('pinjaman.excel');
+        Route::resource('pinjaman-ketua', 'Ketua\PinjamanController')->except(['create', 'store', 'edit']);
     });
