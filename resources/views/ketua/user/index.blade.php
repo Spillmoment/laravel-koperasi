@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Data Admin')
+@section('title', 'Data User')
 
 @section('content')
 
@@ -23,8 +23,8 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
             <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
-            <li class="breadcrumb-item"><a href="#">Admin</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Data Admin</li>
+            <li class="breadcrumb-item"><a href="#">User</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Data User</li>
         </ol>
     </nav>
 

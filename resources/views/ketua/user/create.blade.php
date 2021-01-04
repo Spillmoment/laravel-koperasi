@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Anggota')
+@section('title', 'Tambah User')
 
 @section('content')
 
@@ -11,8 +11,8 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
             <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
-            <li class="breadcrumb-item"><a href="#">Anggota</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Tambah Anggota</li>
+            <li class="breadcrumb-item"><a href="#">User</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Tambah User</li>
         </ol>
     </nav>
 
@@ -22,7 +22,7 @@
     <div class="col-12 mb-4">
         <div class="card border-light shadow-sm components-section">
             <div class="card-body">
-                <form action="{{ route('admin.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('user.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row mb-4">
                         <div class="col-lg-5 col-sm-6">

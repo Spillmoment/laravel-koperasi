@@ -1,88 +1,113 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Jenis Simpanan')
+@section('title', 'Detail Pinjaman')
 
 @section('content')
 
-    @if (session('success'))
-        @push('scripts')
-            <script>
-                swal({
-                    title: "Good job!",
-                    text: "{{ session('success') }}",
-                    icon: "success",
-                    button: false,
-                    timer: 2000
-                });
-            </script>
-        @endpush
+<div class="py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+            <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+            <li class="breadcrumb-item"><a href="#">Pinjaman</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Detail Pinjaman</li>
+        </ol>
+    </nav>
 
-    @elseif(session('error'))
-        @push('scripts')
-            <script>
-                swal({
-                    title: "Sorry",
-                    text: "{{ session('error') }}",
-                    icon: "error",
-                    button: false,
-                    timer: 2000
-                });
-            </script>
-        @endpush
-    @endif
+</div>
 
 
-    <div class="py-4">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
-                <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
-                <li class="breadcrumb-item"><a href="#">Anggota</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Tambah Anggota</li>
-            </ol>
-        </nav>
+@if (session('status'))
+@push('scripts')
+<script>
+    swal({
+        title: "Good job!",
+        text: "{{ session('status') }}",
+        icon: "success",
+        button: false,
+        timer: 3000
+    });
 
-    </div>
+</script>
+@endpush
+@endif
 
-    <div class="row">
-        <div class="col-12 mb-4">
-            <div class="card border-light shadow-sm components-section">
-                <div class="card-body">
-                    <form action="{{ route('jenis-simpanan.update', $simpanan->id) }}" method="post">
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="card border-light shadow-md components-section">
+            <div class="card-body">
+                <h4 class="text-primary mt-2 mb-3">Detail Pinjaman {{ $anggota->nama_anggota }}</h4>
+                <table class="table table-bordered table-hover mt-2">
+                    <tr>
+                        <th>ID Pinjaman </th>
+                        <td>{{ $pinjaman->id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Tanggal Pinjaman </th>
+                        <td>{{ $pinjaman->created_at->format('d F Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nama Anggota </th>
+                        <td>{{ $anggota->nama_anggota }}</td>
+                    </tr>
+                    <tr>
+                        <th>Jumlah Peminjaman </th>
+                        <td>@currency($pinjaman->nominal)</td>
+                    </tr>
+                    <tr>
+                        <th>Pokok </th>
+                        <td>@currency($count->jenis_simpanan->minimal_simpan)</td>
+                    </tr>
+                    <tr>
+                        <th>Jangka Waktu </th>
+                        <td>{{ $pinjaman->jangka_waktu }} Bulan</td>
+                    </tr>
+                    <tr>
+                        <th>Bagi Hasil </th>
+                        <td>{{ $pinjaman->bagi_hasil }} %</td>
+                    </tr>
+                    <tr>
+                        <th>Per-Bulan </th>
+                        <td>@currency($pinjaman->bayar_perbulan)</td>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <td>@currency($count->total)</td>
+                    </tr>
+                    <tr>
+                        <th>Status Pinjaman</th>
+                        @if ($pinjaman->status == "pending")
+                        <td> <span class="btn btn-tertiary btn-sm">Pending</span></td>
+                        @elseif($pinjaman->status == "lunas")
+                        <td><span class="btn btn-success btn-sm">Lunas</span></td>
+                        @else
+                        <td><span class="btn btn-danger btn-sm">Belum Lunas</span></td>
+                        @endif
+                    </tr>
+                    <tr>
+                        <th>Keterangan</th>
+                        <td>{{ $pinjaman->keterangan }}</td>
+                    </tr>
+                </table>
+                <div class="float-right">
+                    <form action="{{ route('pinjaman-ketua.update', $pinjaman->id) }}" method="POST">
                         @csrf
-                        @method('put')
-                        <div class="row mb-4">
-                            <div class="col-lg-5 col-sm-6">
-                                <div class="mb-3">
-                                    <label for="nama_simpanan">Nama Simpanan</label>
-                                    <input type="text"
-                                           class="form-control {{ $errors->first('nama_simpanan') ? 'is-invalid' : '' }}"
-                                           id="nama_simpanan" name="nama_simpanan"
-                                           value="{{ $simpanan->nama_simpanan  }}">
-                                    <div class="invalid-feedback">
-                                        {{$errors->first('nama_simpanan')}}
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="minimal_simpan">Minimal Simpan</label>
-                                    <input type="number"
-                                           class="form-control {{ $errors->first('minimal_simpan') ? 'is-invalid' : '' }}"
-                                           id="minimal_simpan" name="minimal_simpan"
-                                           value="{{ $simpanan->minimal_simpan  }}">
-                                    <div class="invalid-feedback">
-                                        {{$errors->first('minimal_simpan')}}
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                        </div>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        @method('PUT')
+                        @if ($pinjaman->status != 'lunas')
+                        <button type="submit" class="btn btn-primary btn-md"> <i class="fas fa-check"></i> Konfirmasi
+                            Success</button>
+                        @endif
                     </form>
-
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 @endsection
+
+<style>
+    td {
+        font-weight: 900;
+    }
+
+</style>
