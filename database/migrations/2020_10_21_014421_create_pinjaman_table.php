@@ -20,9 +20,12 @@ class CreatePinjamanTable extends Migration
             $table->foreign('anggota_id')->references('id')->on('anggota')->onDelete('cascade');
 
             $table->integer('nominal');
+            $table->float('bagi_hasil');
             $table->char('jangka_waktu', 2);
-            $table->char('bagi_hasil', 3);
+            $table->integer('bayar_pokok');
+            $table->integer('hasil_bagi');
             $table->integer('bayar_perbulan');
+            $table->integer('total');
             $table->text('keterangan')->nullable();
             $table->enum('status', ['pending', 'belum_lunas', 'lunas']);
 

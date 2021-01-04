@@ -18,6 +18,7 @@ Route::prefix('admin')
         Route::resource('simpanan', 'SimpananController');
         Route::get('/rekap/anggota', 'SimpananController@anggota')->name('simpanan.anggota');
         Route::get('/rekap/anggota/cari', 'SimpananController@cari_anggota')->name('cari.anggota');
+        Route::resource('pinjaman', 'PinjamanController');
     });
 
 Route::prefix('ketua')
