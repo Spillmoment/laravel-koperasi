@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit User Ketua')
+@section('title', 'Edit User')
 
 @section('content')
 
@@ -11,8 +11,8 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
             <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
-            <li class="breadcrumb-item"><a href="#">User Ketua</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Edit User Ketua</li>
+            <li class="breadcrumb-item"><a href="#">User</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit User</li>
         </ol>
     </nav>
 
@@ -22,7 +22,7 @@
     <div class="col-12 mb-4">
         <div class="card border-light shadow-sm components-section">
             <div class="card-body">
-                <form action="{{ route('admin.update',$user->id) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('user.update',$user->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="row mb-4">
