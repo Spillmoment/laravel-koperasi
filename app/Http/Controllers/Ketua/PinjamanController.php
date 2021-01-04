@@ -10,6 +10,7 @@ use App\Count;
 use Yajra\DataTables\Facades\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\PinjamanExports;
+use PDF;
 
 class PinjamanController extends Controller
 {
@@ -122,5 +123,13 @@ class PinjamanController extends Controller
     {
         $tgl = now();
         return Excel::download(new PinjamanExports, 'Laporan-Pinjaman-' . $tgl . '.xlsx');
+    }
+
+    public function cetak_pdf()
+    {
+        $tgl = now();
+        $pinjaman = Pinjaman::latest()->get();
+        $pdf = PDF::loadview('ketua.report.pinjaman_pdf', ['pinjaman' => $pinjaman]);
+        return $pdf->download('laporan-pinjaman-' . $tgl . '.pdf');
     }
 }
