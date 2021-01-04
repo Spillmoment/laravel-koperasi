@@ -5,20 +5,52 @@ namespace App\Http\Controllers\Ketua;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\JenisSimpanan;
+use Yajra\DataTables\Facades\DataTables;
 
 class JenisSimpananController extends Controller
 {
 
     public function index()
     {
-        $jenis_simpanan = JenisSimpanan::orderBy('created_at', 'desc')->paginate(10);
-        return view('ketua.pinjaman.index', compact('jenis_simpanan'));
+        if (request()->ajax()) {
+            $query = JenisSimpanan::query();
+
+            return DataTables::of($query)
+                ->addColumn('action', function ($item) {
+                    return
+                        '    <div class="btn-group">
+                    <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="icon icon-sm">
+                            <span class="fas fa-ellipsis-h icon-dark"></span>
+                        </span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="action' .  $item->id . '">
+                        <a class="dropdown-item" href="' . route('jenis-simpanan.edit', $item->id) . '"><span class="fas fa-eye mr-2"></span>Details</a>
+                        <form action="' . route('jenis-simpanan.destroy', $item->id) . '" method="POST">
+                                            ' . method_field('delete') . csrf_field() . '
+                                            <button type="submit" class="dropdown-item text-danger">
+                                            <span class="fas fa-trash-alt mr-2"></span>Hapus</a>
+                                            </button>
+                                        </form>
+                    </div>
+                </div>';
+                })
+                ->editColumn('minimal_simpan', function ($item) {
+                    return "Rp." . number_format($item->minimal_simpan, 0, ',', '.');
+                })
+                ->rawColumns(['action', 'status'])
+                ->make();
+        }
+
+        return view('ketua.jenis_simpanan.index');
     }
+
 
 
     public function create()
     {
-        return view('ketua.pinjaman.create');
+        return view('ketua.jenis_simpanan.create');
     }
 
 
@@ -30,7 +62,7 @@ class JenisSimpananController extends Controller
         ]);
 
         JenisSimpanan::create($request->all());
-        return redirect()->route('jenis-pinjaman.index')
+        return redirect()->route('jenis_simpanan.index')
             ->with(['status' => 'Data Jenis Simpanan Berhasil Ditambahkan']);
     }
 
@@ -43,7 +75,7 @@ class JenisSimpananController extends Controller
     public function edit($id)
     {
         $simpanan = JenisSimpanan::findOrFail($id);
-        return view('ketua.pinjaman.show', compact('simpanan'));
+        return view('ketua.jenis_simpanan.show', compact('simpanan'));
     }
 
 
