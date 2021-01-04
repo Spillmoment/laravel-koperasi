@@ -101,14 +101,14 @@
 
             {{-- Sidebar Ketua --}}
             @elsecan('isKetua')
-            <li class="nav-item ">
+            <li class="nav-item {{ (request()->is('ketua') ? 'active' : '') }}">
                 <a href="{{ route('dashboard.ketua') }}" class="nav-link">
                     <span class="sidebar-icon"><span class="fas fa-chart-pie"></span></span>
                     <span>Dashboard</span>
                 </a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item {{ (request()->is('ketua/user*') ? 'active' : '') }}">
                 <span class="nav-link  collapsed  d-flex justify-content-between align-items-center"
                     data-toggle="collapse" data-target="#submenu-app">
                     <span>
@@ -117,41 +117,40 @@
                     </span>
                     <span class="link-arrow"><span class="fas fa-chevron-right"></span></span>
                 </span>
-                <div class="multi-level collapse {{ (Request::route()->getName() == 'admin.index') ||
-                                        (Request::route()->getName() == 'admin.create') || 
-                                        (Request::route()->getName() == 'admin.show')  ? 'show' : '' }}" role="list"
+                <div class="multi-level collapse {{ (Request::route()->getName() == 'user.index') ||
+                                        (Request::route()->getName() == 'user.create') || 
+                                        (Request::route()->getName() == 'user.show')  ? 'show' : '' }}" role="list"
                     id="submenu-app" aria-expanded="false">
                     <ul class="flex-column nav">
-                        <li class="nav-item {{ (Request::route()->getName() == 'admin.index') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('admin.index') }}"><span>Data User</span></a>
+                        <li class="nav-item {{ (Request::route()->getName() == 'user.index') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('user.index') }}"><span>Data User</span></a>
                         </li>
-                        <li class="nav-item {{ (Request::route()->getName() == 'admin.create') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('admin.create') }}"><span>Tambah User</span></a>
+                        <li class="nav-item {{ (Request::route()->getName() == 'user.create') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('user.create') }}"><span>Tambah User</span></a>
                         </li>
                     </ul>
                 </div>
             </li>
 
-            <li class="nav-item ">
+            <li class="nav-item {{ request()->is('ketua/jenis-simpanan*') ? 'active' : '' }}">
                 <a href="{{ route('jenis-simpanan.index') }}" class="nav-link">
                     <span class="sidebar-icon"><span class="fas fa-book"></span></span>
                     <span>Jenis Simpanan</span>
                 </a>
             </li>
 
-
-            <li class="nav-item {{ (Request::route()->getName() == 'pinjaman-ketua.index') ? 'active' : '' }}">
+            <li class="nav-item {{ request()->is('ketua/pinjaman-ketua*') ? 'active' : '' }}">
                 <a href="{{ route('pinjaman-ketua.index') }}" class="nav-link">
                     <span class="sidebar-icon"><span class="fas fa-database"></span></span>
                     <span>Data Pinjaman</span>
                 </a>
             </li>
-{{--             
+            {{--             
             <li class="nav-item {{ (Request::route()->getName() == 'simpanan.index') ? 'active' : '' }}">
-                <a href="{{ route('simpanan.index') }}" class="nav-link">
-                    <span class="sidebar-icon"><span class="fas fa-database"></span></span>
-                    <span>Data Simpanan</span>
-                </a> --}}
+            <a href="{{ route('simpanan.index') }}" class="nav-link">
+                <span class="sidebar-icon"><span class="fas fa-database"></span></span>
+                <span>Data Simpanan</span>
+            </a> --}}
             {{-- </li> --}}
             @endcan
 

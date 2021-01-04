@@ -4,17 +4,6 @@
 
 @section('content')
 
-<div class="py-4">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
-            <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
-            <li class="breadcrumb-item"><a href="#">Pinjaman</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Data Pinjaman</li>
-        </ol>
-    </nav>
-
-</div>
-
 @if (session('status'))
 @push('scripts')
 <script>
@@ -32,14 +21,27 @@
 
 <div class="row">
     <div class="col-12 mb-4">
-        <div class="card border-light shadow-sm components-section">
-            <div class="row">
-                <div class="col-md-4">
-                    <a href="{{ route('pinjaman.excel') }}" class="btn btn-success ml-2"> <i
-                            class="fas fa-file-excel"></i>
-                        Excel</a>
+
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+            <div class="d-block mb-4 mb-md-0">
+                <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                    <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                        <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+                        <li class="breadcrumb-item"><a href="#">Pinjaman</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Data Pinjaman</li>
+                    </ol>
+                </nav>
+                <h2 class="h4">Table Pinjaman</h2>
+            </div>
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group">
+                    <a href="{{ route('pinjaman.pdf') }}" class="btn btn-sm btn-outline-danger">Export PDF</a>
+                    <a href="{{ route('pinjaman.excel') }}" class="btn btn-sm btn-outline-success">Export Excel</a>
                 </div>
             </div>
+        </div>
+        <div class="card border-light shadow-sm components-section">
+
             <div class="card-body">
                 <div class="row">
                     <table class="table table-hover" id="pinjamanTable">

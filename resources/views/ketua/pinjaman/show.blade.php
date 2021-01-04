@@ -92,8 +92,10 @@
                     <form action="{{ route('pinjaman-ketua.update', $pinjaman->id) }}" method="POST">
                         @csrf
                         @method('PUT')
+                        @if ($pinjaman->status != 'lunas')
                         <button type="submit" class="btn btn-primary btn-md"> <i class="fas fa-check"></i> Konfirmasi
                             Success</button>
+                        @endif
                     </form>
                 </div>
             </div>
