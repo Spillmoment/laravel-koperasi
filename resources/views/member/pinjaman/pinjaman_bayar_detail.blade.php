@@ -4,6 +4,21 @@
 
 @section('content')
 
+@if ($message = Session::get('success'))
+@push('scripts')
+<script>
+    swal({
+        title: "Berhasil!",
+        text: "{{ session('success') }}",
+        icon: "success",
+        button: false,
+        timer: 3000
+    });
+
+</script>
+@endpush
+@endif
+
 <div class="row">
     <div class="col-12 mb-4">
         <div class="card border-light shadow-sm components-section">
@@ -71,14 +86,14 @@
                     </div>
                     <div class="mb-3">
                         <label for="telat">Telat (hari)</label>
-                        <input type="text" class="form-control {{ $errors->first('telat') ? 'is-invalid' : '' }}" id="telat" name="telat" disabled readonly value="{{ $telat_hari }}">
+                        <input type="text" class="form-control {{ $errors->first('telat') ? 'is-invalid' : '' }}" id="telat" name="telat" readonly value="{{ $telat_hari }}">
                         <div class="invalid-feedback">
                             {{$errors->first('telat')}}
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="denda">Denda</label>
-                        <input type="text" class="form-control {{ $errors->first('denda') ? 'is-invalid' : '' }}" id="denda" name="denda" disabled readonly value="{{ $denda }}">
+                        <input type="text" class="form-control {{ $errors->first('denda') ? 'is-invalid' : '' }}" id="denda" name="denda" readonly value="{{ $denda }}">
                         <div class="invalid-feedback">
                             {{$errors->first('denda')}}
                         </div>
