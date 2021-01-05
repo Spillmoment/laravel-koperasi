@@ -4,6 +4,21 @@
 
 @section('content')
 
+@if ($message = Session::get('success'))
+@push('scripts')
+<script>
+    swal({
+        title: "Berhasil!",
+        text: "{{ session('success') }}",
+        icon: "success",
+        button: false,
+        timer: 3000
+    });
+
+</script>
+@endpush
+@endif
+
 <div class="row">
     <div class="col-12 mb-4">
         <div class="card border-light shadow-sm components-section">
@@ -74,9 +89,29 @@
                                 <td><span class="font-weight-bold">{{ $data->keterangan == '' ? '-' : $data->keterangan }}</span></td>
                                 <td><span class="font-weight-bold">{{ $data->status }}</span></td>
                                 <td>
-                                    @if ($data->status != 'pending')
-                                        <button type="submit" class="btn btn-sm btn-primary"><span class="fa fa-edit"></span> Detail</button>
-                                    @endif
+                                    <div class="btn-group">
+                                        <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="icon icon-sm">
+                                                <span class="fas fa-ellipsis-h icon-dark"></span>
+                                            </span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            @if ($data->status != 'pending')
+                                            <a class="dropdown-item" href="{{ route('pinjaman.bayar', ['id'=>$data->id]) }}"><span class="fas fa-eye mr-2"></span>Angsuran</a>
+                                            @else
+                                            <a class="dropdown-item" href="{{ route('pinjaman.edit', $data->id) }}"><span class="fas fa-edit mr-2"></span>Edit</a>
+                                            
+                                            <form action="{{ route('pinjaman.destroy', $data->id) }}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="dropdown-item text-danger">
+                                                    <span class="fas fa-trash-alt mr-2"></span> Hapus
+                                                </button>
+                                            </form>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </td>
                               </tr>                             
                                   
