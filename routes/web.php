@@ -16,6 +16,11 @@ Route::prefix('admin')
         Route::put('update-pengaturan/{user}', 'Admin\DashboardController@update_pengaturan')->name('admin.update-pengaturan');
         Route::resource('simpanan', 'SimpananController');
         Route::get('/rekap/anggota', 'SimpananController@anggota')->name('simpanan.anggota');
+        Route::get('/rekap/anggota/cari', 'SimpananController@cari_anggota')->name('cari.anggota');
+        Route::resource('pinjaman', 'PinjamanController');
+        Route::get('bayar-pinjaman/{id}', 'PinjamanController@bayar_pinjaman')->name('pinjaman.bayar');
+        Route::get('bayar-pinjaman/{id}/{bayarpinjamid}', 'PinjamanController@bayar_pinjaman_detail')->name('pinjaman.bayar.detail');
+        Route::put('bayar-pinjaman/{id}/{bayarpinjamid}', 'PinjamanController@bayar_pinjaman_post')->name('pinjaman.bayar.post');
     });
 
 Route::prefix('ketua')

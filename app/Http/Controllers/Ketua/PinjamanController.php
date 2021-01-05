@@ -106,7 +106,7 @@ class PinjamanController extends Controller
     public function update($id)
     {
         try {
-            Pinjaman::findOrFail($id)->update(['status' => 'lunas']);
+            Pinjaman::findOrFail($id)->update(['status' => 'belum_lunas']);
             return redirect()->route('pinjaman-ketua.show', [$id])->with(['status' => 'Status Berhasil Diupdate']);
         } catch (\Exception $e) {
             return redirect()->back();

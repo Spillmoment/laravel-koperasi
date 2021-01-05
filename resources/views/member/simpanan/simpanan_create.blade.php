@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Anggota')
+@section('title', 'Tambah Simpanan')
 
 @section('content')
 
@@ -10,16 +10,17 @@
             <div class="card-body">     
                 <div class="row mb-4">
                     <div class="col-lg-4 col-sm-6">
-
-                    <form action="{{ route('simpanan.store') }}" method="post">
+                        <form action="{{ route('simpanan.store') }}" method="post">
                             @csrf
-
-                            <input class="form-control basicAutoComplete" type="text" autocomplete="off">
-
-
                             <div class="mb-3">
                                 <label for="anggota_id">ID Anggota</label>
-                                <input type="text" class="form-control {{ $errors->first('anggota_id') ? 'is-invalid' : '' }}" id="anggota_id" name="anggota_id">
+                                {{-- <input type="text" class="form-control {{ $errors->first('anggota_id') ? 'is-invalid' : '' }}" id="anggota_id" name="anggota_id"> --}}
+                                <select class="form-select {{ $errors->first('anggota_id') ? 'is-invalid' : '' }}" name="anggota_id" id="anggota_id">
+                                    <option value=""></option>
+                                    @foreach ($data_anggota as $anggota)
+                                    <option value="{{ $anggota->id }}">{{ $anggota->nama_anggota }} - {{ $anggota->no_ktp }}</option>
+                                    @endforeach
+                                </select>
                                 <div class="invalid-feedback">
                                     {{$errors->first('anggota_id')}}
                                 </div>
@@ -32,15 +33,15 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="jenis_simpanan">Jenis Simpanan</label>
-                                <select class="form-select" name="jenis_simpanan" id="jenis_simpanan">
-                                    <option value="pokok">Pokok</option>
-                                    <option value="sukarela">Sukarela</option>
-                                    <option value="wajib">Wajib</option>
-                                    <option value="lain">Lain-lain</option>
+                                <label for="jenis_simpanan_id">Jenis Simpanan</label>
+                                <select class="form-select {{ $errors->first('jenis_simpanan_id') ? 'is-invalid' : '' }}" name="jenis_simpanan_id" id="jenis_simpanan_id">
+                                    <option value=""></option>
+                                    @foreach ($data_jenis_simpanan as $jensim)
+                                    <option value="{{ $jensim->id }}">{{ $jensim->nama_simpanan }}</option>
+                                    @endforeach
                                 </select>
                                 <div class="invalid-feedback">
-                                    {{$errors->first('nominal')}}
+                                    {{$errors->first('jenis_simpanan_id')}}
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -58,8 +59,8 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <input type="submit" value="Simpan">
-                                {{-- <button type="submit" class="btn btn-secondary">Simpan</button> --}}
+                                {{-- <input type="submit" value="Simpan"> --}}
+                                <button type="submit" class="btn btn-secondary">Simpan</button>
                             </div>
                         </form>
                         
@@ -74,14 +75,12 @@
 @endsection
 
 @push('scripts')
-{{-- <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.7/dist/latest/bootstrap-autocomplete.min.js"></script>
+    <script>
+        document.getElementById("anggota_id").addEventListener("change", function(e) {
+            let get_anggota = this.options[this.selectedIndex].text.slice(0, -6); 
+            document.getElementById("nama_anggota").value = get_anggota;
+        });
 
-<script>
-    $('.basicAutoComplete').autoComplete({
-        resolverSettings: {
-            url: 'https://gist.githubusercontent.com/cbmgit/852c2702d4342e7811c95f8ffc2f017f/raw/InsuranceCompanies.json'
-        }
-    });
-</script> --}}
+    </script>
 
 @endpush

@@ -64,16 +64,16 @@
                     </span>
                     <span class="link-arrow"><span class="fas fa-chevron-right"></span></span>
                 </span>
-                <div class="multi-level collapse {{ (Request::route()->getName() == 'anggota.index') ||
-                                          (Request::route()->getName() == 'anggota.create') || 
-                                          (Request::route()->getName() == 'anggota.show')  ? 'show' : '' }}" role="list"
+                <div class="multi-level collapse {{ (Request::route()->getName() == 'pinjaman.index') ||
+                                          (Request::route()->getName() == 'pinjaman.create') || 
+                                          (Request::route()->getName() == 'pinjaman.show')  ? 'show' : '' }}" role="list"
                     id="pinjaman-app" aria-expanded="false">
                     <ul class="flex-column nav">
-                        <li class="nav-item {{ (Request::route()->getName() == 'anggota.index') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('anggota.index') }}"><span>Data Pinjaman</span></a>
+                        <li class="nav-item {{ (Request::route()->getName() == 'pinjaman.index') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('pinjaman.index') }}"><span>Data Pinjaman</span></a>
                         </li>
-                        <li class="nav-item {{ (Request::route()->getName() == 'anggota.create') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('anggota.create') }}"><span>Tambah Pinjaman</span></a>
+                        <li class="nav-item {{ (Request::route()->getName() == 'pinjaman.create') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('pinjaman.create') }}"><span>Tambah Pinjaman</span></a>
                         </li>
                     </ul>
                 </div>
@@ -93,7 +93,7 @@
                     id="simpanan-app" aria-expanded="false">
                     <ul class="flex-column nav">
                         <li class="nav-item {{ (Request::route()->getName() == 'simpanan.create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('simpanan.create') }}"><span>Tambah simpanan</span></a></li>
-                        <li class="nav-item {{ (Request::route()->getName() == 'simpanan.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('simpanan.index') }}"><span>Data simpanan</span></a></li>
+                        <li class="nav-item {{ (Request::route()->getName() == 'simpanan.index') ? 'active' : '' }}"><a class="nav-link" href="/admin/simpanan"><span>Data simpanan</span></a></li>
                         <li class="nav-item {{ (Request::route()->getName() == 'simpanan.anggota') ? 'active' : '' }}"><a class="nav-link" href="{{ route('simpanan.anggota') }}"><span>Data simpanan per anggota</span></a></li>
                     </ul>
                 </div>
