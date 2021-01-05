@@ -9,17 +9,17 @@
         <div class="card border-light shadow-sm components-section">
             <div class="card-body">     
                 <div class="row mb-4">
-                    <div class="col-lg-4 col-sm-6">
+                    <div class="col-md-4">
                         <h4>Detail Pinjaman</h4>
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>Jumlah Pinjaman</th>
-                                    <td>{{ $data_pinjaman->nominal }}</td>
+                                    <td> @currency($data_pinjaman->nominal) </td>
                                 </tr>
                                 <tr>
                                     <th>Bayar Pokok </th>
-                                    <td>{{ $data_pinjaman->bayar_pokok }}%</td>
+                                    <td> @currency($data_pinjaman->bayar_pokok) </td>
                                 </tr>
                                 <tr>
                                     <th>Jangka Waktu</th>
@@ -27,19 +27,25 @@
                                 </tr>
                                 <tr>
                                     <th>Bagi hasil</th>
-                                    <td>{{ $data_pinjaman->bagi_hasil }}% ( {{ $data_pinjaman->hasil_bagi }} )</td>
+                                    <td>{{ $data_pinjaman->bagi_hasil }}% ( @currency($data_pinjaman->hasil_bagi) )</td>
                                 </tr>
                                 <tr>
                                     <th>Perbulan</th>
-                                    <td>{{ $data_pinjaman->bayar_perbulan }}</td>
+                                    <td> @currency($data_pinjaman->bayar_perbulan)</td>
                                 </tr>
                                 <tr>
                                     <th>Total</th>
-                                    <td>{{ $data_pinjaman->total }}</td>
+                                    <td> @currency($data_pinjaman->total) </td>
                                 </tr>
                                 <tr>
                                     <th>Status Pinjaman</th>
-                                    <td>{{ $data_pinjaman->status }}</td>
+                                    <td>
+                                        @if ($data_pinjaman->status == 'belum_lunas')
+                                            <span class="text-danger">BELUM LUNAS</span>
+                                        @else
+                                            <span>LUNAS</span>
+                                        @endif
+                                        </td>
                                 </tr>
                                 <tr>
                                     <th>Keterangan</th>
@@ -53,7 +59,7 @@
                 </div>
                 
                 <h4>Histori Pembayaran Angsuran</h4>
-                <table class="table">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -71,13 +77,29 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $data->jatuh_tempo }}</td>
                             <td>{{ $data->tanggal_bayar }}</td>
-                            <td>{{ $data->nominal }}</td>
-                            <td>{{ $data->denda }}</td>
-                            <td>{{ $data->keterangan }}</td>
-                            <td><button type="submit" class="btn btn-sm btn-primary"><span class="fa fa-usd"></span> Bayar</button></td>
+                            <td>{{ $data->tanggal_bayar != null ? $data->nominal : '-' }}</td>
+                            <td>{{ $data->tanggal_bayar != null ? $data->denda : '-' }}</td>
+                            <td>{{ $data->keterangan != null ? $data->keterangan : '-' }}</td>
+                            <td>
+                                @if ($data->tanggal_bayar == null)
+                                    <a href="{{ route('pinjaman.bayar.detail', ['id' => $data_pinjaman->id, 'bayarpinjamid' => $data->id]) }}" class="btn btn-sm btn-primary">Bayar</a>
+                                @endif
+                            </td>
                         </tr>
-                            
                         @endforeach
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td><h4>Total</h4></td>
+                            <td><h5>@currency($total_bayar)</h5></td>
+                            <td>
+                                @if( $count_sudah_bayar == $data_pinjaman->jangka_waktu)
+                                    <button class="btn btn-sm btn-success" type="button">LUNAS</button>
+                                @endif
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
                     </tbody>
                 </table>
 
