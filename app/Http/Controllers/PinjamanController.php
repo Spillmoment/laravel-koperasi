@@ -42,14 +42,15 @@ class PinjamanController extends Controller
      */
     public function store(Request $request)
     {
+        $cek_jasa = Pengaturan::first();
+        
         $request->validate([
             'anggota_id' => 'required|exists:anggota,id',
             'jangka_waktu' => 'required|integer|between:1,12',
-            'nominal' => 'required|numeric',
+            'nominal' => "required|numeric|min:1000|max:$cek_jasa->max_pinjaman",
             'keterangan' => 'max:200',
         ]);
-
-        $cek_jasa = Pengaturan::first();
+        
         $nominal = $request->nominal;
         $bagi_hasil = $cek_jasa->jasa_pinjam / 100;
         $waktu = $request->jangka_waktu;
@@ -95,9 +96,8 @@ class PinjamanController extends Controller
                     'keterangan' => null,
                 ]);
             }
-            // dd($bayar_pinjaman);
 
-            return redirect()->route('pinjaman.create')->with(['success' => 'Pinjaman berhasil ditambahkan.']);
+            return redirect()->route('pinjaman.index')->with(['success' => 'Pinjaman berhasil ditambahkan.']);
         }
     }
 
@@ -120,7 +120,11 @@ class PinjamanController extends Controller
      */
     public function edit(Pinjaman $pinjaman)
     {
-        //
+        $data_anggota = Anggota::all();
+        $data_pengaturan = Pengaturan::first();
+        $data_pinjaman = Pinjaman::with(['anggota'])->find($pinjaman->id);
+        
+        return view('member.pinjaman.pinjaman_edit', compact('data_anggota', 'data_pengaturan', 'data_pinjaman'));
     }
 
     /**
@@ -132,7 +136,16 @@ class PinjamanController extends Controller
      */
     public function update(Request $request, Pinjaman $pinjaman)
     {
-        //
+        $request->validate([
+            'anggota_id' => 'required|exists:anggota,id',
+            'keterangan' => 'max:200',
+        ]);
+        Pinjaman::where('id', $pinjaman->id)->update([
+            'anggota_id' => $request->anggota_id,
+            'keterangan' => $request->keterangan,
+        ]);
+
+        return redirect()->route('pinjaman.index')->with(['success' => 'Pinjaman berhasil diupdate.']);
     }
 
     /**
@@ -143,14 +156,20 @@ class PinjamanController extends Controller
      */
     public function destroy(Pinjaman $pinjaman)
     {
-        //
+        $pinjaman = Pinjaman::findOrFail($pinjaman->id);
+        $pinjaman->forceDelete();
+        return redirect()->route('pinjaman.index')->with(['success' => 'Data Pinjaman ID '.$pinjaman->id.' Berhasil Dihapus']);
     }
 
     public function bayar_pinjaman($id)
     {
         $data_pinjaman = Pinjaman::find($id);
         $detail_pinjaman = BayarPinjaman::where('pinjaman_id', $data_pinjaman->id)->get();
-        return view('member.pinjaman.pinjaman_bayar', compact('data_pinjaman', 'detail_pinjaman'));
+        $count_sudah_bayar = BayarPinjaman::where('pinjaman_id', $data_pinjaman->id)->whereNotNull('tanggal_bayar')->count();
+
+        $total_bayar = $data_pinjaman->bayar_perbulan * $count_sudah_bayar;
+        
+        return view('member.pinjaman.pinjaman_bayar', compact('data_pinjaman', 'detail_pinjaman', 'total_bayar', 'count_sudah_bayar'));
     }
     
     public function bayar_pinjaman_detail($id, $bayarpinjamid)
@@ -175,12 +194,25 @@ class PinjamanController extends Controller
 
     public function bayar_pinjaman_post(Request $request, $id, $bayarpinjamid)
     {
+        $request->validate([
+            'denda' => 'numeric',
+            'keterangan' => 'max:200',
+        ]);
+
         BayarPinjaman::where('id', $bayarpinjamid)->update([
             'tanggal_bayar' => Carbon::now('Asia/Jakarta'),
             'denda' => $request->denda,
             'keterangan' => $request->keterangan,
         ]);
 
-        return redirect()->route('pinjaman.index')->with(['success' => 'Pembayaran berhasil.']);
+        $cek_data = BayarPinjaman::where('pinjaman_id', $id)->whereNull('tanggal_bayar')->count();
+
+        if ($cek_data == 0) {
+            Pinjaman::where('id', $id)->update([
+                'status' => 'lunas',
+            ]);
+        }
+
+        return redirect()->route('pinjaman.bayar', ['id'=>$id])->with(['success' => 'Pembayaran berhasil.']);
     }
 }
