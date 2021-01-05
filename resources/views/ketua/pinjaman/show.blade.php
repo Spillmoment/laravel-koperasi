@@ -55,7 +55,7 @@
                     </tr>
                     <tr>
                         <th>Pokok </th>
-                        <td>@currency($count->jenis_simpanan->minimal_simpan)</td>
+                        <td>@currency($pinjaman->bayar_pokok)</td>
                     </tr>
                     <tr>
                         <th>Jangka Waktu </th>
@@ -71,7 +71,7 @@
                     </tr>
                     <tr>
                         <th>Total</th>
-                        <td>@currency($count->total)</td>
+                        <td>@currency($pinjaman->total)</td>
                     </tr>
                     <tr>
                         <th>Status Pinjaman</th>

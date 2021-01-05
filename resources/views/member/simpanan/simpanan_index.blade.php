@@ -46,7 +46,7 @@
                                     <th>Jenis</th>
                                     <th>Nominal</th>
                                     <th>Keterangan</th>
-                                    <th>Action</th>
+                                    {{-- <th>Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -61,7 +61,7 @@
                                 <td><span class="font-weight-normal">{{ ucwords($data->jenis_simpanan->nama_simpanan) }}</span></td> 
                                 <td><span class="font-weight-bold">{{ $data->nominal }}</span></td>
                                   <td><span class="font-weight-bold">{{ $data->keterangan == '' ? '-' : $data->keterangan }}</span></td>
-                                  <td>
+                                  {{-- <td>
                                       <div class="btn-group">
                                           <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                               <span class="icon icon-sm">
@@ -70,23 +70,23 @@
                                               <span class="sr-only">Toggle Dropdown</span>
                                           </button>
                                           <div class="dropdown-menu">
-                                              <a class="dropdown-item" href="{{ route('anggota.edit', $data->id) }}"><span class="fas fa-eye mr-2"></span>View Details</a>
+                                              <a class="dropdown-item" href="{{ route('simpanan.edit', $data->id) }}"><span class="fas fa-eye mr-2"></span>View Details</a>
                                               <a class="dropdown-item" href="#"><span class="fas fa-edit mr-2"></span>Edit</a>
-                                              <a class="dropdown-item text-danger" href="{{ route('anggota.destroy', $data->id) }}" onclick="event.preventDefault();
+                                              <a class="dropdown-item text-danger" href="{{ route('simpanan.destroy', $data->id) }}" onclick="event.preventDefault();
             document.getElementById('delete-form').submit();"><span class="fas fa-trash-alt mr-2"></span>Remove</a>
-                                            <form id="delete-form" action="{{ route('anggota.destroy', $data->id) }}" method="POST" style="display: none;">
+                                            <form id="delete-form" action="{{ route('simpanan.destroy', $data->id) }}" method="POST" style="display: none;">
                                                 @csrf
                                                 @method('delete')
                                             </form>
                                           </div>
                                       </div>
-                                  </td>
+                                  </td> --}}
                               </tr>                             
                                   
                               @endforeach 
                             </tbody>
                         </table>
-                        <div class="card-footer px-3 border-0 d-flex align-items-center justify-content-between">
+                        {{-- <div class="card-footer px-3 border-0 d-flex align-items-center justify-content-between">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination mb-0">
                                     <li class="page-item">
@@ -113,7 +113,7 @@
                                 </ul>
                             </nav>
                             <div class="font-weight-bold small">Showing <b>5</b> out of <b>25</b> entries</div>
-                        </div>
+                        </div> --}}
                     </div>
                     <footer class="footer section py-2">
 

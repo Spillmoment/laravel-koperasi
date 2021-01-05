@@ -145,4 +145,42 @@ class PinjamanController extends Controller
     {
         //
     }
+
+    public function bayar_pinjaman($id)
+    {
+        $data_pinjaman = Pinjaman::find($id);
+        $detail_pinjaman = BayarPinjaman::where('pinjaman_id', $data_pinjaman->id)->get();
+        return view('member.pinjaman.pinjaman_bayar', compact('data_pinjaman', 'detail_pinjaman'));
+    }
+    
+    public function bayar_pinjaman_detail($id, $bayarpinjamid)
+    {
+        $data_pinjaman = Pinjaman::find($id);
+        $detail_pinjaman = BayarPinjaman::where('id', $bayarpinjamid)->first();
+
+        $tempo = Carbon::parse($detail_pinjaman->jatuh_tempo);
+        $today = Carbon::now('Asia/Jakarta');
+
+        if ($tempo < $today) {
+            $selisih = $tempo->diffInDays($today);
+            $telat_hari = $selisih;
+            $denda = 1000 * $selisih;
+        } else {
+            $telat_hari = 0;
+            $denda = 0;
+        }
+        
+        return view('member.pinjaman.pinjaman_bayar_detail', compact('data_pinjaman', 'detail_pinjaman', 'telat_hari', 'denda'));
+    }
+
+    public function bayar_pinjaman_post(Request $request, $id, $bayarpinjamid)
+    {
+        BayarPinjaman::where('id', $bayarpinjamid)->update([
+            'tanggal_bayar' => Carbon::now('Asia/Jakarta'),
+            'denda' => $request->denda,
+            'keterangan' => $request->keterangan,
+        ]);
+
+        return redirect()->route('pinjaman.index')->with(['success' => 'Pembayaran berhasil.']);
+    }
 }
