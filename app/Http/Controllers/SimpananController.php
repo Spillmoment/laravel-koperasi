@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Simpanan;
+use App\JenisSimpanan;
+use App\Anggota;
 use Illuminate\Http\Request;
+use DB;
 
 class SimpananController extends Controller
 {
@@ -14,7 +17,7 @@ class SimpananController extends Controller
      */
     public function index()
     {
-        $data_simpanan = Simpanan::with(['anggota'])->get();
+        $data_simpanan = Simpanan::with(['anggota','jenis_simpanan'])->get();
         // dd($data_simpanan);
         return view('member.simpanan.simpanan_index', compact('data_simpanan'));
     }
@@ -26,7 +29,9 @@ class SimpananController extends Controller
      */
     public function create()
     {
-        return view('member.simpanan.simpanan_create');
+        $data_anggota = Anggota::all();
+        $data_jenis_simpanan = JenisSimpanan::all();
+        return view('member.simpanan.simpanan_create', compact('data_anggota', 'data_jenis_simpanan'));
     }
 
     /**
@@ -38,8 +43,8 @@ class SimpananController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'anggota_id' => 'required',
-            'jenis_simpanan' => 'required|in:pokok,sukarela,wajib,lain',
+            'anggota_id' => 'required|exists:anggota,id',
+            'jenis_simpanan_id' => 'required|exists:jenis_simpanan,id',
             'nominal' => 'required|numeric',
             'keterangan' => 'max:200',
         ]);
@@ -95,4 +100,27 @@ class SimpananController extends Controller
     {
         //
     }
+
+    public function anggota()
+    {
+        return view('member.simpanan.simpanan_anggota');
+    }
+
+    public function cari_anggota(Request $request)
+	{
+        $cari = $request->cari;
+        
+        $anggota = Anggota::where('no_ktp', $cari)->first();
+
+        $data_simpanan = Simpanan::with(['jenis_simpanan'])->select('jenis_simpanan_id', DB::raw('SUM(nominal) as total_simpanan'))->where('anggota_id', $anggota->id)->groupBy('jenis_simpanan_id')->get();
+        $simpanan_1 = Simpanan::where('anggota_id', $anggota->id)->where('jenis_simpanan_id', 1)->get();
+        $count_simpanan_1 = Simpanan::select(DB::raw('SUM(nominal) as total_simpanan'))->where('anggota_id', $anggota->id)->where('jenis_simpanan_id', 1)->first();
+        $simpanan_2 = Simpanan::where('anggota_id', $anggota->id)->where('jenis_simpanan_id', 2)->get();
+        $count_simpanan_2 = Simpanan::select(DB::raw('SUM(nominal) as total_simpanan'))->where('anggota_id', $anggota->id)->where('jenis_simpanan_id', 2)->first();
+        $simpanan_3 = Simpanan::where('anggota_id', $anggota->id)->where('jenis_simpanan_id', 3)->get();
+        $count_simpanan_3 = Simpanan::select(DB::raw('SUM(nominal) as total_simpanan'))->where('anggota_id', $anggota->id)->where('jenis_simpanan_id', 3)->first();
+        // dd($count_simpanan_3);
+		return view('member.simpanan.simpanan_anggota', compact('anggota','data_simpanan', 'simpanan_1', 'count_simpanan_1', 'simpanan_2', 'count_simpanan_2', 'simpanan_3', 'count_simpanan_3'));
+ 
+	}
 }

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Data Anggota')
+@section('title', 'Data Pinjaman')
 
 @section('content')
 
@@ -42,45 +42,42 @@
                             <thead>
                                 <tr>
                                     <th>Tanggal</th>
-                                    <th>Nama Anggota</th>						
-                                    <th>Jenis</th>
+                                    <th>Nama Anggota</th>	
                                     <th>Nominal</th>
+                                    <th>Bagi hasil</th>
+                                    <th>Waktu</th>
+                                    <th>Pokok</th>
+                                    <th>Bagi hasil (Rp)</th>
+                                    <th>Per Bulan</th>
+                                    <th>Total</th>
                                     <th>Keterangan</th>
-                                    {{-- <th>Action</th> --}}
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                              @foreach ($data_simpanan as $data)
+                              @foreach ($data_pinjaman as $data)
                               <tr>
-                                  <td>
-                                    <span class="font-weight-normal">{{ $data->created_at->format('d-m-Y') }}</span>
-                                  </td>
-                                  <td>
-                                      <span class="font-weight-normal">{{ $data->anggota->nama_anggota }}</span>
-                                  </td>
-                                <td><span class="font-weight-normal">{{ ucwords($data->jenis_simpanan->nama_simpanan) }}</span></td> 
-                                <td><span class="font-weight-bold">{{ $data->nominal }}</span></td>
-                                  <td><span class="font-weight-bold">{{ $data->keterangan == '' ? '-' : $data->keterangan }}</span></td>
-                                  {{-- <td>
-                                      <div class="btn-group">
-                                          <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                              <span class="icon icon-sm">
-                                                  <span class="fas fa-ellipsis-h icon-dark"></span>
-                                              </span>
-                                              <span class="sr-only">Toggle Dropdown</span>
-                                          </button>
-                                          <div class="dropdown-menu">
-                                              <a class="dropdown-item" href="{{ route('simpanan.edit', $data->id) }}"><span class="fas fa-eye mr-2"></span>View Details</a>
-                                              <a class="dropdown-item" href="#"><span class="fas fa-edit mr-2"></span>Edit</a>
-                                              <a class="dropdown-item text-danger" href="{{ route('simpanan.destroy', $data->id) }}" onclick="event.preventDefault();
-            document.getElementById('delete-form').submit();"><span class="fas fa-trash-alt mr-2"></span>Remove</a>
-                                            <form id="delete-form" action="{{ route('simpanan.destroy', $data->id) }}" method="POST" style="display: none;">
-                                                @csrf
-                                                @method('delete')
-                                            </form>
-                                          </div>
-                                      </div>
-                                  </td> --}}
+                                <td>
+                                <span class="font-weight-normal">{{ $data->created_at->format('d-m-Y') }}</span>
+                                </td>
+                                <td>
+                                    <span class="font-weight-normal">{{ $data->anggota->nama_anggota }}</span>
+                                </td>
+                                <td><span class="font-weight-normal">Rp. {{ number_format($data->nominal,2) }}</span></td> 
+                                <td><span class="font-weight-bold">{{ $data->bagi_hasil }}%</span></td>
+                                <td><span class="font-weight-bold">{{ $data->jangka_waktu }} bulan</span></td>
+                                <td><span class="font-weight-bold">Rp. {{ number_format($data->bayar_pokok,2) }}</span></td>
+                                <td><span class="font-weight-bold">Rp. {{ number_format($data->hasil_bagi,2) }}</span></td>
+                                <td><span class="font-weight-bold">Rp. {{ number_format($data->bayar_perbulan,2) }}</span></td>
+                                <td><span class="font-weight-bold">Rp. {{ number_format($data->total,2) }}</span></td>
+                                <td><span class="font-weight-bold">{{ $data->keterangan == '' ? '-' : $data->keterangan }}</span></td>
+                                <td><span class="font-weight-bold">{{ $data->status }}</span></td>
+                                <td>
+                                    @if ($data->status != 'pending')
+                                        <button type="submit" class="btn btn-sm btn-primary"><span class="fa fa-edit"></span> Detail</button>
+                                    @endif
+                                </td>
                               </tr>                             
                                   
                               @endforeach 
