@@ -9,6 +9,7 @@
         <div class="card border-light shadow-sm components-section">
             <div class="card-body">     
                 <div class="row mb-4">
+
                     <div class="col-md-4">
                         <h4>Detail Pinjaman</h4>
                         <table class="table">
@@ -27,7 +28,6 @@
                                 </tr>
                                 <tr>
                                     <th>Bagi hasil</th>
-                                    <td>{{ $data_pinjaman->bagi_hasil }}% ( @currency($data_pinjaman->hasil_bagi) )</td>
                                 </tr>
                                 <tr>
                                     <th>Perbulan</th>
@@ -59,6 +59,8 @@
                 </div>
                 
                 <h4>Histori Pembayaran Angsuran</h4>
+
+                <table class="table">
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -77,6 +79,13 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $data->jatuh_tempo }}</td>
                             <td>{{ $data->tanggal_bayar }}</td>
+                            <td>{{ $data->nominal }}</td>
+                            <td>{{ $data->denda }}</td>
+                            <td>{{ $data->keterangan }}</td>
+                            <td><button type="submit" class="btn btn-sm btn-primary"><span class="fa fa-usd"></span> Bayar</button></td>
+                        </tr>
+                            
+                        @endforeach
                             <td>{{ $data->tanggal_bayar != null ? $data->nominal : '-' }}</td>
                             <td>{{ $data->tanggal_bayar != null ? $data->denda : '-' }}</td>
                             <td>{{ $data->keterangan != null ? $data->keterangan : '-' }}</td>

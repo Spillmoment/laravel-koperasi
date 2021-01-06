@@ -66,6 +66,7 @@
                 </span>
                 <div class="multi-level collapse {{ (Request::route()->getName() == 'pinjaman.index') ||
                                           (Request::route()->getName() == 'pinjaman.create') || 
+
                                           (Request::route()->getName() == 'pinjaman.show')  ? 'show' : '' }}" role="list"
                     id="pinjaman-app" aria-expanded="false">
                     <ul class="flex-column nav">
@@ -89,13 +90,19 @@
                 </span>
                 <div class="multi-level collapse {{ (Request::route()->getName() == 'simpanan.index') ||
                                                     (Request::route()->getName() == 'simpanan.create') || 
-                                                    (Request::route()->getName() == 'simpanan.show')  ? 'show' : '' }}" role="list"
-                    id="simpanan-app" aria-expanded="false">
+
+                                                    (Request::route()->getName() == 'simpanan.show')  ? 'show' : '' }}"
+                    role="list" id="simpanan-app" aria-expanded="false">
                     <ul class="flex-column nav">
-                        <li class="nav-item {{ (Request::route()->getName() == 'simpanan.create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('simpanan.create') }}"><span>Tambah simpanan</span></a></li>
-                        <li class="nav-item {{ (Request::route()->getName() == 'simpanan.index') ? 'active' : '' }}"><a class="nav-link" href="/admin/simpanan"><span>Data simpanan</span></a></li>
-                        <li class="nav-item {{ (Request::route()->getName() == 'simpanan.anggota') ? 'active' : '' }}"><a class="nav-link" href="{{ route('simpanan.anggota') }}"><span>Data simpanan per anggota</span></a></li>
-                        <li class="nav-item {{ (Request::route()->getName() == 'simpanan.penarikan') ? 'active' : '' }}"><a class="nav-link" href="{{ route('simpanan.penarikan') }}"><span>Penarikan simpanan</span></a></li>
+                        <li class="nav-item {{ (Request::route()->getName() == 'simpanan.create') ? 'active' : '' }}"><a
+                                class="nav-link" href="{{ route('simpanan.create') }}"><span>Tambah simpanan</span></a>
+                        </li>
+                        <li class="nav-item {{ (Request::route()->getName() == 'simpanan.index') ? 'active' : '' }}"><a
+                                class="nav-link" href="/admin/simpanan"><span>Data simpanan</span></a></li>
+                        <li class="nav-item {{ (Request::route()->getName() == 'simpanan.anggota') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('simpanan.anggota') }}"><span>Data simpanan per
+                                    anggota</span></a></li>
+
                     </ul>
                 </div>
             </li>
@@ -144,6 +151,13 @@
                 <a href="{{ route('pinjaman-ketua.index') }}" class="nav-link">
                     <span class="sidebar-icon"><span class="fas fa-database"></span></span>
                     <span>Data Pinjaman</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{ request()->is('ketua/pengaturan*') ? 'active' : '' }}">
+                <a href="{{ route('pengaturan.index') }}" class="nav-link">
+                    <span class="sidebar-icon"><span class="fas fa-anchor"></span></span>
+                    <span>Pengaturan</span>
                 </a>
             </li>
             {{--             

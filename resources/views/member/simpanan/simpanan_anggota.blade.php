@@ -118,6 +118,7 @@
                                     @foreach ($simpanan_3 as $simp3)
                                     <tr>
                                         <td>{{ $simp3->created_at->format('j F Y') }}</td>
+
                                         <td class="{{ $simp3->nominal < 0 ? 'text-danger' : '' }}">{{ $simp3->nominal }}</td>
                                     </tr>                                            
                                     @endforeach

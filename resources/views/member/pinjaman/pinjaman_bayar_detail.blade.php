@@ -4,6 +4,7 @@
 
 @section('content')
 
+
 @if ($message = Session::get('success'))
 @push('scripts')
 <script>
@@ -18,6 +19,7 @@
 </script>
 @endpush
 @endif
+
 
 <div class="row">
     <div class="col-12 mb-4">
@@ -86,6 +88,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="telat">Telat (hari)</label>
+
                         <input type="text" class="form-control {{ $errors->first('telat') ? 'is-invalid' : '' }}" id="telat" name="telat" readonly value="{{ $telat_hari }}">
                         <div class="invalid-feedback">
                             {{$errors->first('telat')}}
