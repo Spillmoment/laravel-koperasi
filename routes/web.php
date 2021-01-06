@@ -29,6 +29,7 @@ Route::prefix('ketua')
         Route::get('/', 'Ketua\DashboardController@index')->name('dashboard.ketua');
         Route::resource('jenis-simpanan', 'Ketua\JenisSimpananController');
         Route::resource('user', 'Ketua\UserController');
+        Route::resource('pengaturan', 'Ketua\PengaturanController');
         Route::get('simpanan_excel', 'Ketua\SimpananController@cetak_excel')->name('simpanan.excel');
         Route::resource('simpanan', 'Ketua\SimpananController')->except(['create', 'store', 'edit']);
         Route::get('pinjaman_pdf', 'Ketua\PinjamanController@cetak_pdf')->name('pinjaman.pdf');
