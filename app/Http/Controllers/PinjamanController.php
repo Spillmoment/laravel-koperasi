@@ -12,7 +12,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class PinjamanController extends Controller
 {
-  
+
     public function index()
     {
         if (request()->ajax()) {
@@ -20,24 +20,39 @@ class PinjamanController extends Controller
 
             return DataTables::of($query)
                 ->addColumn('action', function ($item) {
-                    return
-                        '    <div class="btn-group">
-                    <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="icon icon-sm">
-                            <span class="fas fa-ellipsis-h icon-dark"></span>
-                        </span>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="action' .  $item->id . '">
-                        <a class="dropdown-item" href="' . route('pinjaman-ketua.show', $item->id) . '"><span class="fas fa-eye mr-2"></span>Details</a>
-                        <form action="' . route('pinjaman-ketua.destroy', $item->id) . '" method="POST">
-                                            ' . method_field('delete') . csrf_field() . '
-                                            <button type="submit" class="dropdown-item text-danger">
-                                            <span class="fas fa-trash-alt mr-2"></span>Hapus</a>
-                                            </button>
-                                        </form>
-                    </div>
-                </div>';
+                    if ($item->status == 'pending') {
+                        return
+                            '    <div class="btn-group">
+                <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="icon icon-sm">
+                        <span class="fas fa-ellipsis-h icon-dark"></span>
+                    </span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="action' .  $item->id . '">
+                    <a class="dropdown-item" href="' . route('pinjaman.edit', $item->id) . '"><span class="fas fa-eye mr-2"></span>Details</a>
+                    <form action="' . route('pinjaman.destroy', $item->id) . '" method="POST">
+                                        ' . method_field('delete') . csrf_field() . '
+                                        <button type="submit" class="dropdown-item text-danger">
+                                        <span class="fas fa-trash-alt mr-2"></span>Hapus</a>
+                                        </button>
+                                    </form>
+                </div>
+            </div>';
+                    } elseif ($item->status == 'lunas' || $item->status == 'belum_lunas') {
+                        return
+                            '<div class="btn-group">
+                <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="icon icon-sm">
+                        <span class="fas fa-ellipsis-h icon-dark"></span>
+                    </span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="action' .  $item->id . '">
+                    <a class="dropdown-item" href="' . route('pinjaman.edit', $item->id) . '"><span class="fas fa-eye mr-2"></span>Details</a>
+                </div>
+            </div>';
+                    }
                 })
                 ->editColumn('created_at', function ($item) {
                     return $item->created_at->format('d F Y');
@@ -71,7 +86,7 @@ class PinjamanController extends Controller
 
     }
 
-   
+
     public function create()
     {
         $data_anggota = Anggota::all();
@@ -154,7 +169,7 @@ class PinjamanController extends Controller
         //
     }
 
-   
+
     public function edit(Pinjaman $pinjaman)
     {
         $data_anggota = Anggota::all();
@@ -164,7 +179,7 @@ class PinjamanController extends Controller
         return view('member.pinjaman.pinjaman_edit', compact('data_anggota', 'data_pengaturan', 'data_pinjaman'));
     }
 
-   
+
     public function update(Request $request, Pinjaman $pinjaman)
     {
         $request->validate([
@@ -179,7 +194,7 @@ class PinjamanController extends Controller
         return redirect()->route('pinjaman.index')->with(['success' => 'Pinjaman berhasil diupdate.']);
     }
 
-   
+
     public function destroy(Pinjaman $pinjaman)
     {
         $pinjaman = Pinjaman::findOrFail($pinjaman->id);
