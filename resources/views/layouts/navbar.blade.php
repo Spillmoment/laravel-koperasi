@@ -95,6 +95,7 @@
                         <li class="nav-item {{ (Request::route()->getName() == 'simpanan.create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('simpanan.create') }}"><span>Tambah simpanan</span></a></li>
                         <li class="nav-item {{ (Request::route()->getName() == 'simpanan.index') ? 'active' : '' }}"><a class="nav-link" href="/admin/simpanan"><span>Data simpanan</span></a></li>
                         <li class="nav-item {{ (Request::route()->getName() == 'simpanan.anggota') ? 'active' : '' }}"><a class="nav-link" href="{{ route('simpanan.anggota') }}"><span>Data simpanan per anggota</span></a></li>
+                        <li class="nav-item {{ (Request::route()->getName() == 'simpanan.penarikan') ? 'active' : '' }}"><a class="nav-link" href="{{ route('simpanan.penarikan') }}"><span>Penarikan simpanan</span></a></li>
                     </ul>
                 </div>
             </li>
