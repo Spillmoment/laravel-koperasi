@@ -15,12 +15,12 @@
 
 </div>
 
-@if (session('status'))
+@if ($message = Session::get('success'))
 @push('scripts')
 <script>
     swal({
-        title: "Good job!",
-        text: "{{ session('status') }}",
+        title: "Berhasil!",
+        text: "{{ session('success') }}",
         icon: "success",
         button: false,
         timer: 3000
@@ -52,6 +52,7 @@
 
                         </tbody>
                     </table>
+
                     <footer class="footer section py-2">
 
                 </div>
