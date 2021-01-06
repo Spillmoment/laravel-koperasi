@@ -4,6 +4,21 @@
 
 @section('content')
 
+@if ($message = Session::get('success'))
+@push('scripts')
+<script>
+    swal({
+        title: "Berhasil!",
+        text: "{{ session('success') }}",
+        icon: "success",
+        button: false,
+        timer: 3000
+    });
+
+</script>
+@endpush
+@endif
+
 <div class="row">
     <div class="col-12 mb-4">
         <div class="card border-light shadow-sm components-section">
@@ -61,7 +76,7 @@
                                 <td><span class="font-weight-normal">{{ ucwords($data->jenis_simpanan->nama_simpanan) }}</span></td> 
                                 <td><span class="font-weight-bold">{{ $data->nominal }}</span></td>
                                   <td><span class="font-weight-bold">{{ $data->keterangan == '' ? '-' : $data->keterangan }}</span></td>
-                                  {{-- <td>
+                                  <td>
                                       <div class="btn-group">
                                           <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                               <span class="icon icon-sm">
@@ -70,17 +85,18 @@
                                               <span class="sr-only">Toggle Dropdown</span>
                                           </button>
                                           <div class="dropdown-menu">
-                                              <a class="dropdown-item" href="{{ route('simpanan.edit', $data->id) }}"><span class="fas fa-eye mr-2"></span>View Details</a>
-                                              <a class="dropdown-item" href="#"><span class="fas fa-edit mr-2"></span>Edit</a>
-                                              <a class="dropdown-item text-danger" href="{{ route('simpanan.destroy', $data->id) }}" onclick="event.preventDefault();
-            document.getElementById('delete-form').submit();"><span class="fas fa-trash-alt mr-2"></span>Remove</a>
-                                            <form id="delete-form" action="{{ route('simpanan.destroy', $data->id) }}" method="POST" style="display: none;">
+                                              <a class="dropdown-item" href="{{ route('cari.anggota', ['cari' => $data->anggota->no_ktp]) }}"><span class="fas fa-eye mr-2"></span>Simpanan {{ Str::limit($data->anggota->nama_anggota, 5) }}</a>
+                                              <a class="dropdown-item" href="/admin/simpanan/{{ $data->id }}/edit"><span class="fas fa-edit mr-2"></span>Edit</a>
+                                              <form action="/admin/simpanan/{{ $data->id }}" method="POST">
                                                 @csrf
                                                 @method('delete')
+                                                <button type="submit" class="dropdown-item text-danger">
+                                                    <span class="fas fa-trash-alt mr-2"></span> Hapus
+                                                </button>
                                             </form>
                                           </div>
                                       </div>
-                                  </td> --}}
+                                  </td>
                               </tr>                             
                                   
                               @endforeach 
