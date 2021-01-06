@@ -27,7 +27,7 @@
                     <div class="col-12 col-xl-8">
                         <div class="card card-body bg-white border-light shadow-sm mb-4">
                             <h2 class="h5 mb-4">Profile {{ auth()->user()->name }}</h2>
-                            <form action="{{ route('user.update-profile', Auth::id()) }}" method="POST">
+                            <form action="{{ route('admin.update-profile', Auth::id()) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">

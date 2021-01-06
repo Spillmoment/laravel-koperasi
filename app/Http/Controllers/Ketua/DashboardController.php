@@ -13,7 +13,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-
         $data = [
             'pinjaman' => Pinjaman::all()->count(),
             'simpanan' => Simpanan::all()->count(),

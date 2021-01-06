@@ -7,26 +7,65 @@ use App\JenisSimpanan;
 use App\Anggota;
 use Illuminate\Http\Request;
 use DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class SimpananController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function index()
     {
-        $data_simpanan = Simpanan::with(['anggota','jenis_simpanan'])->get();
-        // dd($data_simpanan);
-        return view('member.simpanan.simpanan_index', compact('data_simpanan'));
+        if (request()->ajax()) {
+            $query = Simpanan::query()->with(['anggota', 'jenis_simpanan']);
+
+            return DataTables::of($query)
+                ->addColumn('action', function ($item) {
+                    return '
+                        <div class="btn-group">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle mr-1 mb-1" 
+                                    type="button" id="action' .  $item->id . '"
+                                        data-toggle="dropdown" 
+                                        aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Aksi
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="action' .  $item->id . '">
+                                    <a class="dropdown-item" href="' . route('simpanan.show', $item->id) . '">
+                                        Sunting
+                                    </a>
+                                    <form action="' . route('simpanan.destroy', $item->id) . '" method="POST">
+                                        ' . method_field('delete') . csrf_field() . '
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                    </div>';
+                })
+                ->editColumn('created_at', function ($item) {
+                    return $item->created_at->format('d F Y');
+                })
+                ->editColumn('anggota_id', function ($item) {
+                    return $item->anggota->id;
+                })
+                ->addColumn('anggota', function ($item) {
+                    return $item->anggota->nama_anggota;
+                })
+                ->editColumn('jenis_simpanan_id', function ($item) {
+                    return $item->jenis_simpanan->nama_simpanan;
+                })
+                ->editColumn('nominal', function ($item) {
+                    return "Rp." . number_format($item->nominal, 0, ',', '.');
+                })
+                ->rawColumns(['action'])
+                ->make();
+        }
+
+        return view('member.simpanan.simpanan_index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
         $data_anggota = Anggota::all();
@@ -34,12 +73,6 @@ class SimpananController extends Controller
         return view('member.simpanan.simpanan_create', compact('data_anggota', 'data_jenis_simpanan'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -56,46 +89,25 @@ class SimpananController extends Controller
         return redirect()->route('simpanan.create')->with(['status' => 'Data Simpanan Berhasil Ditambahkan']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Simpanan  $simpanan
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show(Simpanan $simpanan)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Simpanan  $simpanan
-     * @return \Illuminate\Http\Response
-     */
+  
     public function edit(Simpanan $simpanan)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Simpanan  $simpanan
-     * @return \Illuminate\Http\Response
-     */
+   
     public function update(Request $request, Simpanan $simpanan)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Simpanan  $simpanan
-     * @return \Illuminate\Http\Response
-     */
+   
     public function destroy(Simpanan $simpanan)
     {
         //
@@ -107,9 +119,9 @@ class SimpananController extends Controller
     }
 
     public function cari_anggota(Request $request)
-	{
+    {
         $cari = $request->cari;
-        
+
         $anggota = Anggota::where('no_ktp', $cari)->first();
 
         $data_simpanan = Simpanan::with(['jenis_simpanan'])->select('jenis_simpanan_id', DB::raw('SUM(nominal) as total_simpanan'))->where('anggota_id', $anggota->id)->groupBy('jenis_simpanan_id')->get();
@@ -120,7 +132,6 @@ class SimpananController extends Controller
         $simpanan_3 = Simpanan::where('anggota_id', $anggota->id)->where('jenis_simpanan_id', 3)->get();
         $count_simpanan_3 = Simpanan::select(DB::raw('SUM(nominal) as total_simpanan'))->where('anggota_id', $anggota->id)->where('jenis_simpanan_id', 3)->first();
         // dd($count_simpanan_3);
-		return view('member.simpanan.simpanan_anggota', compact('anggota','data_simpanan', 'simpanan_1', 'count_simpanan_1', 'simpanan_2', 'count_simpanan_2', 'simpanan_3', 'count_simpanan_3'));
- 
-	}
+        return view('member.simpanan.simpanan_anggota', compact('anggota', 'data_simpanan', 'simpanan_1', 'count_simpanan_1', 'simpanan_2', 'count_simpanan_2', 'simpanan_3', 'count_simpanan_3'));
+    }
 }

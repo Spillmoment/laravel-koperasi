@@ -23,7 +23,7 @@
                             <h2 class="h5 mb-4">Pengaturan Akun {{ auth()->user()->name }}</h2>
 
                             <form method="post" enctype="multipart/form-data"
-                                action="{{route('user.update-pengaturan', Auth::id() )}}">
+                                action="{{route('admin.update-pengaturan', Auth::id() )}}">
                                 @csrf
                                 @method('PUT')
 
