@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Ketua - Data Simpanan')
+@section('title', 'Data Simpanan')
 
 @section('content')
 
@@ -33,7 +33,7 @@
 <div class="row">
     <div class="col-12 mb-4">
         <div class="card border-light shadow-sm components-section">
-           
+
             <div class="card-body">
                 <div class="row">
                     <table class="table table-hover" id="simpananTable">
