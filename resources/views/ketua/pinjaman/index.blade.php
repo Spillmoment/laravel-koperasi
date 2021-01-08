@@ -33,12 +33,7 @@
                 </nav>
                 <h2 class="h4">Table Pinjaman</h2>
             </div>
-            <div class="btn-toolbar mb-2 mb-md-0">
-                <div class="btn-group">
-                    <a href="{{ route('pinjaman.pdf') }}" class="btn btn-sm btn-outline-danger">Export PDF</a>
-                    <a href="{{ route('pinjaman.excel') }}" class="btn btn-sm btn-outline-success">Export Excel</a>
-                </div>
-            </div>
+
         </div>
         <div class="card border-light shadow-sm components-section">
 
