@@ -94,6 +94,7 @@ class PengaturanController extends Controller
         ]);
 
         $data = $request->all();
+        
         $pengaturan->update($data);
         return redirect()->route('jenis-simpanan.index')
             ->with(['status' => 'Data Jenis Simpanan Berhasil Diupdate']);
