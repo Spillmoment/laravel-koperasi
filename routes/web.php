@@ -27,6 +27,9 @@ Route::prefix('admin')
         Route::put('bayar-pinjaman/{id}/{bayarpinjamid}', 'PinjamanController@bayar_pinjaman_post')->name('pinjaman.bayar.post');
     });
 
+
+
+
 Route::prefix('ketua')
     ->middleware('ketua')
     ->group(function () {

@@ -26,7 +26,6 @@
         button: false,
         timer: 3000
     });
-
 </script>
 @endpush
 @endif
@@ -109,5 +108,4 @@
     td {
         font-weight: 900;
     }
-
 </style>

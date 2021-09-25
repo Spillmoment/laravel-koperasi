@@ -16,7 +16,6 @@ class AnggotaController extends Controller
     {
         if (request()->ajax()) {
             $query = Anggota::query();
-
             return DataTables::of($query)
                 ->addColumn('action', function ($item) {
                     return '
@@ -57,7 +56,6 @@ class AnggotaController extends Controller
 
     public function create()
     {
-
         $min_simpanan = JenisSimpanan::find(1);
         return view('admin.member.anggota_create', compact('min_simpanan'));
     }
