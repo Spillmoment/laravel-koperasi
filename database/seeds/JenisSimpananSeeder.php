@@ -12,8 +12,7 @@ class JenisSimpananSeeder extends Seeder
      */
     public function run()
     {
-        $table = (new JenisSimpanan())->getTable();
-        truncate($table);
+        truncate( new JenisSimpanan() );
 
         JenisSimpanan::insert([
             ['nama_simpanan' => 'pokok', 'minimal_simpan' => 100000],
