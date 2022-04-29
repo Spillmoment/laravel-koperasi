@@ -1,6 +1,16 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+
+function truncate($class)
+{
+    $table = $class->getTable();
+
+    DB::statement("SET FOREIGN_KEY_CHECKS=0");
+    DB::table($table)->truncate();
+    DB::statement("SET FOREIGN_KEY_CHECKS=1");
+}
 
 function customDate($date, $date_format)
 {
